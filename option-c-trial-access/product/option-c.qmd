@@ -21,7 +21,12 @@ execute:
 
 This report consolidates the `option-c.ipynb` workflow into Quarto format while preserving the notebook code and analytic sequence.
 
-The current scope is U.S. Type 2 diabetes clinical trial access. The workflow links ClinicalTrials.gov site data with CDC PLACES burden measures, ACS socioeconomic context, rurality, Medicaid expansion status, and infrastructure proxies such as endocrinologist density and academic medical center presence.
+The current scope is U.S. Type 2 diabetes clinical trial access, organized around two aims:
+
+1. **Descriptive aim (Sections 1–5):** Characterize the spatial mismatch between trial site placement and disease burden at the state and county levels.
+2. **Modeling aim (Section 8):** Test whether trial-access variables are independently associated with county-level diabetes burden after adjusting for socioeconomic and demographic factors.
+
+The workflow links ClinicalTrials.gov site data with CDC PLACES burden measures, ACS socioeconomic context, rurality, Medicaid expansion status, and infrastructure proxies such as endocrinologist density and academic medical center presence.
 
 Supporting data dictionaries:
 
@@ -38,7 +43,7 @@ Supporting data dictionaries:
 
 ### Interpretation Before Modeling
 
-The descriptive evidence already points to a useful modeling frame. Disease burden alone does not explain where trial sites cluster. Industry sponsorship, provider concentration, and institutional infrastructure appear to matter at least as much, and probably more, than prevalence itself. The state residuals and county distance measures should therefore be treated as baseline descriptive targets for the next phase rather than as causal effects.
+The descriptive evidence (Aim 1) already points to a useful modeling frame. Disease burden alone does not explain where trial sites cluster. Industry sponsorship, provider concentration, and institutional infrastructure appear to matter at least as much, and probably more, than prevalence itself. The state residuals and county distance measures therefore motivate the modeling question (Aim 2): once socioeconomic structure is accounted for, do these trial-access measures carry any independent signal for county diabetes burden, or are they largely redundant proxies of the same structural advantage?
 
 ## Reproducibility Setup
 
@@ -2204,16 +2209,15 @@ state_df.head(20)
 
 ## 8. Modeling: County Diabetes Burden
 
-This section models county-level diabetes burden (`places_diabetes`) as a function
-of county diabetes clinical trial access and county socioeconomic conditions,
-following the modeling plan in `option_c_burden_target_modeling_plan.md`.
-Three complementary models are estimated:
+This section addresses **Aim 2**: after adjusting for socioeconomic and demographic
+structure, are trial-access variables independently associated with county diabetes
+prevalence (`places_diabetes`)?
 
-| Model | Purpose |
-|-------|---------|
-| **Elastic Net** | Linear baseline; regularization handles correlated SES predictors |
-| **Random Forest** | Nonlinear ensemble; permutation importance ranks predictors without standardization |
-| **XGBoost** | Gradient boosting; highest predictive performance; SHAP enables group-level attribution |
+| Model | Role | Purpose |
+|-------|------|---------|
+| **Elastic Net** | **Primary (inferential)** | Regularized linear model; coefficients estimate adjusted associations; regularization handles correlated SES predictors |
+| **Random Forest** | Secondary (robustness) | Nonlinear ensemble; checks whether non-linear effects improve explanatory power; permutation importance ranks predictors |
+| **XGBoost** | Secondary (robustness) | Gradient boosting; SHAP provides a supplementary view of relative feature importance (predictive, not inferential) |
 
 ### Variable Treatment
 
@@ -2570,29 +2574,43 @@ print("Saved figure:", PRODUCT_RESULTS / "shap_group_importance.png")
 
 ### Interpretation
 
-Three complementary models have now estimated the relationship between county
-diabetes burden (`places_diabetes`) and two groups of predictors:
-**trial-access variables** (`log_trials`, `log_dist`) and
-**socioeconomic / demographic variables**.
+The primary inferential evidence comes from the **Elastic Net coefficients**:
+whether `log_trials` and `log_dist` have non-zero, statistically meaningful
+associations with county diabetes prevalence after adjusting for the 11
+socioeconomic / demographic covariates. The ML models (Random Forest, XGBoost)
+serve as secondary robustness checks.
 
-Key questions answered:
+Key questions for **Aim 2**:
 
-1. **Do trial-access predictors matter after controlling for SES?**
-   - If Elastic Net coefficients for `log_trials` and `log_dist` are non-zero
-     and the Random Forest / XGBoost permutation importance and SHAP values
-     for those features are meaningful, trial geography is aligned with burden.
-   - If they shrink to near zero while SES coefficients dominate, trial
-     placement tracks structural advantage rather than disease burden.
+1. **Are trial-access predictors independently associated with burden after adjusting for SES?**
+   - The Elastic Net coefficients provide the primary answer. If the
+     coefficients for `log_trials` and `log_dist` are non-zero after
+     regularization, trial access is associated with burden beyond what
+     SES already explains.
+   - If they shrink to near zero while SES coefficients dominate, trial access
+     is largely redundant once structural disadvantage is accounted for —
+     consistent with both trial placement and burden being downstream of the
+     same socioeconomic determinants.
 
-2. **Which predictor group drives county diabetes burden most?**
-   - The group-level SHAP bar chart (cell above) gives the definitive answer:
-     whichever group has the highest mean |SHAP| is the dominant driver.
+2. **Do non-linear effects matter?**
+   - If XGBoost R² substantially exceeds Elastic Net R², important nonlinear
+     or interaction effects exist that the linear model misses.
+   - If performance is similar, the linear model's coefficient-based
+     conclusions are robust.
 
-3. **Across-model consistency**
-   - Agreement across Elastic Net, Random Forest, and XGBoost strengthens
-     conclusions drawn from any single model.
-   - If XGBoost R² substantially exceeds Elastic Net R², this suggests
-     important nonlinear or interaction effects that the linear model misses.
+3. **Supplementary feature-importance check (SHAP)**
+   - The group-level SHAP bar chart provides a supplementary view of which
+     predictor group carries more predictive importance in the XGBoost model.
+     Note: SHAP measures predictive contribution, not statistical association.
+     It corroborates but does not replace the inferential conclusions from the
+     Elastic Net.
+
+**Connecting the aims:** The descriptive analysis (Aim 1, Sections 1–5)
+showed that trial sites tend to co-occur with infrastructure and socioeconomic
+advantage rather than with the highest disease burden. The modeling results
+here (Aim 2) test the complementary question: whether trial-access measures
+are associated with burden itself after adjustment, or whether both are
+co-determined by the same structural factors.
 
 **Ecological caution:** All results are aggregate (county-level) associations.
 Individual-level inference is not warranted (ecological fallacy).
