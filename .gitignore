@@ -250,6 +250,9 @@ _freeze/
 
 option-c-trial-access/product/*.txt
 
+# Local-only presentation deck (not part of the published site)
+/presentation.html
+
 # Markdown
 **/*.md
 !README.md

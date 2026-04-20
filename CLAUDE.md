@@ -4,27 +4,52 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-JSC370 midterm project focused on **Option C: Clinical Trial Access Gap for Type 2 Diabetes**. The project studies U.S. Type 2 diabetes clinical trial access by linking ClinicalTrials.gov trial-site data with diabetes burden, socioeconomic context, rurality, Medicaid expansion, and healthcare infrastructure proxies at both state and county levels.
+JSC370 **final project** (extended from the midterm) focused on **Option C: Clinical Trial Access Gap for Type 2 Diabetes**. The project studies U.S. Type 2 diabetes clinical trial access by linking ClinicalTrials.gov trial-site data with diabetes burden, socioeconomic context, rurality, Medicaid expansion, and healthcare infrastructure proxies at both state and county levels.
 
-There are two deliverables, both Quarto (`.qmd`) reports rendered to self-contained HTML:
+The deliverable is a multi-page Quarto **website** (served from `docs/` via GitHub Pages at <https://shifosss.github.io/JSC370-Midterm-Proj/>) plus the underlying computational pipeline:
 
-1. **`option-c-trial-access/product/option-c.qmd`** — The full computational pipeline (data acquisition through modeling).
-2. **`writing-report.qmd`** — The written deliverable report summarizing findings.
+1. **`index.qmd`** — Landing page: abstract, headline findings, links to all artifacts.
+2. **`writing-report.qmd`** — Full written report, rendered to **both HTML and PDF** (the PDF is linked from the landing page as a download).
+3. **`viz.qmd`** — HW5 deliverable: three interactive Plotly figures (choropleth, histogram, scatter).
+4. **`about.qmd`** — Author, data sources, acknowledgements.
+5. **`option-c-trial-access/product/option-c.qmd`** — Full computational pipeline (data acquisition → enrichment → geocoding → modeling). This is **not** rendered into the site; it lives on GitHub as a linked reference and produces the model-ready CSVs the site consumes.
 
-Other option directories (`option-d-conflicts-of-interest/`) contain archived exploration and are gitignored.
+Other option directories (`option-a-drug-safety/`, `option-b-ed-timeliness/`, `option-d-conflicts-of-interest/`) are archived exploration and are gitignored. The repo name is preserved as `JSC370-Midterm-Proj` to keep the live URL stable.
 
 ## Commands
 
-**Render the pipeline report:**
+**Render the full website (index + report + viz + about) into `docs/`:**
+
+```bash
+quarto render
+```
+
+This uses the explicit allowlist in `_quarto.yml` (`render: [index.qmd, writing-report.qmd, viz.qmd, about.qmd]`) so `option-c.qmd` is NOT pulled into the site.
+
+**Render the written report as both HTML and PDF** (the PDF is served from `docs/writing-report.pdf`):
+
+```bash
+quarto render writing-report.qmd --to all
+```
+
+`--to all` is required because a plain `quarto render` on a site only produces the first format. The PDF needs a LaTeX stack; run `quarto install tinytex` once if missing.
+
+**Render a single site page (e.g. after editing `viz.qmd`):**
+
+```bash
+quarto render viz.qmd
+```
+
+**Render the pipeline notebook** (regenerates all CSVs and PNGs in `option-c-trial-access/product/`; takes ~30 min end-to-end):
 
 ```bash
 quarto render option-c-trial-access/product/option-c.qmd
 ```
 
-**Render the written report:**
+**Regenerate only the Aim 2 CV comparison table** used by the report (~60 s):
 
 ```bash
-quarto render writing-report.qmd
+python option-c-trial-access/product/_regenerate_cv_comparison.py
 ```
 
 **Run the data-acquisition notebook:**
@@ -44,30 +69,46 @@ conda activate jsc370
 
 ```
 .
-├── writing-report.qmd           # Written deliverable report
-├── writing-report.html          # Rendered written report
+├── _quarto.yml                  # Site project config (output-dir: docs, render allowlist)
+├── index.qmd                    # Landing page (abstract + findings + artifact links)
+├── writing-report.qmd           # Full written report (renders to HTML + PDF)
+├── viz.qmd                      # HW5 interactive Plotly figures
+├── about.qmd                    # Author / data sources / acknowledgements
+├── styles.css                   # Shared site styles (darkly theme)
+├── docs/                        # Rendered site — served by GitHub Pages from main/docs
+├── README.md                    # External-facing project docs
+├── AGENTS.md                    # Legacy agent/contributor conventions
 ├── jsc370.full.yml              # Conda environment specification
+├── tasks/
+│   └── todo.md                  # Phased project plan with checkbox status
+├── spec-final-2026.md           # Digested final-project assignment spec
+├── spec-hw5.md                  # Digested HW5 assignment spec
 ├── option-c-trial-access/
 │   ├── discover/
 │   │   ├── data_acquiring/      # Jupyter notebook for API pulls
 │   │   ├── modified_data/       # Intermediate CSVs from discovery
-│   │   ├── results/             # EDA plots (PNG)
+│   │   ├── results/             # Aim 1 descriptive EDA plots (PNG)
 │   │   ├── County_level_data_documentation.md
 │   │   ├── State_level_data_documentation.md
 │   │   └── EDA_Summary_and_Interpretation.md
 │   └── product/
-│       ├── option-c.qmd         # Pipeline report (main deliverable)
-│       ├── option-c.html        # Rendered pipeline report
+│       ├── option-c.qmd         # Full computational pipeline (not rendered into site)
+│       ├── option-c.html        # Rendered pipeline report (tracked in git)
 │       ├── option-c.ipynb       # Notebook precursor
+│       ├── _regenerate_cv_comparison.py  # Fast re-runner for the Aim 2 CV CSV
 │       ├── data/
 │       │   ├── raw/             # Raw API responses (JSON, CSV) — gitignored
 │       │   └── modified/
-│       │       ├── state_modeling_final.csv
-│       │       ├── county_modeling_final.csv
-│       │       └── temp/        # Intermediate tables generated during render
-│       └── results/             # Model output plots (SHAP, coefficients, etc.)
+│       │       ├── state_modeling_final.csv   # 51 × 53 — state-level modeling data
+│       │       ├── county_modeling_final.csv  # 3,221 × 42 — county-level modeling data
+│       │       └── temp/        # Intermediate tables incl. model_comparison_cv.csv
+│       └── results/             # Aim 2 model output plots (SHAP, coefficients, etc.)
+├── option-a-drug-safety/            # Archived, gitignored
+├── option-b-ed-timeliness/          # Archived, gitignored
 └── option-d-conflicts-of-interest/  # Archived, gitignored
 ```
+
+**GitHub Pages contract:** the live site is served from `main` branch, `/docs` folder. `docs/` must be committed after every meaningful render for the live URL to stay in sync.
 
 ## Environment / Secrets
 
