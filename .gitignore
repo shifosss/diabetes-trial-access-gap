@@ -250,5 +250,10 @@ option-c-trial-access/product/*.txt
 # Markdown
 **/*.md
 !README.md
+!CLAUDE.md
+!AGENTS.md
+!spec-*.md
+!tasks/todo.md
+!tasks/lessons.md
 
 .venv-option-c/
