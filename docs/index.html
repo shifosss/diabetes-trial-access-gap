@@ -132,7 +132,7 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#project-summary" id="toc-project-summary" class="nav-link active" data-scroll-target="#project-summary">Project Summary</a></li>
-  <li><a href="#headline-findings-placeholder-updated-in-phase-5" id="toc-headline-findings-placeholder-updated-in-phase-5" class="nav-link" data-scroll-target="#headline-findings-placeholder-updated-in-phase-5">Headline findings <em>(placeholder — updated in Phase 5)</em></a></li>
+  <li><a href="#headline-findings" id="toc-headline-findings" class="nav-link" data-scroll-target="#headline-findings">Headline findings</a></li>
   <li><a href="#explore-the-project" id="toc-explore-the-project" class="nav-link" data-scroll-target="#explore-the-project">Explore the project</a></li>
   </ul>
 </nav>
@@ -176,24 +176,25 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="project-summary">Project Summary</h2>
 <p>Type 2 diabetes affects tens of millions of Americans and is heavily shaped by socioeconomic structure. Clinical trials are the pathway through which new therapies are developed, yet their geographic placement is driven by sponsor logistics and institutional infrastructure rather than disease burden alone. This project links the ClinicalTrials.gov registry with CDC PLACES burden estimates, ACS socioeconomic data, rurality, Medicaid expansion status, and healthcare-infrastructure proxies to ask where U.S. diabetes-trial access is thinnest relative to need, and whether trial-access measures carry any predictive signal for county-level diabetes burden once socioeconomic structure is already accounted for.</p>
 </section>
-<section id="headline-findings-placeholder-updated-in-phase-5" class="level2">
-<h2 class="anchored" data-anchor-id="headline-findings-placeholder-updated-in-phase-5">Headline findings <em>(placeholder — updated in Phase 5)</em></h2>
+<section id="headline-findings" class="level2">
+<h2 class="anchored" data-anchor-id="headline-findings">Headline findings</h2>
 <ul>
-<li>3,646 U.S. Type 2 diabetes studies and 47,118 site records were flattened and geocoded to counties.</li>
-<li>73.4% of U.S. counties host no diabetes trial site; for those counties the median distance to the nearest site is 58.4 km, and 24% are more than 100 km away.</li>
-<li>State-level coverage residuals reveal systematic mismatches between burden and trial density.</li>
-<li>Modeling verdict and feature-importance takeaways will be filled in after Phase 3 (report expansion).</li>
+<li><strong>3,646 U.S. Type 2 diabetes studies</strong> and <strong>47,118 site records</strong> were flattened and geocoded to counties.</li>
+<li><strong>73.4% of U.S. counties host no diabetes trial site.</strong> For those counties the median distance to the nearest site is <strong>58.4 km</strong>, and <strong>24%</strong> are more than 100 km away.</li>
+<li>At the state level, a <strong>coverage residual</strong> (observed trial density minus the density expected for the state’s diabetes-burden decile) reveals systematic under- and over-coverage. Industry-sponsored trial density is <strong>≈6.9× higher</strong> than non-industry density nationally.</li>
+<li>Across <strong>Elastic Net, Random Forest, and XGBoost</strong> (5-fold CV on 3,221 counties), adding trial-access features (<code>log_trials</code>, <code>log_dist</code>) to an SES-only baseline improves R² by at most <strong>ΔR² ≈ +0.003</strong> — trial access is effectively redundant once socioeconomic structure is in the model.</li>
+<li>Every feature-importance lens (standardized coefficients, permutation importance, SHAP) ranks the two trial-access variables <strong>below every major SES block</strong>.</li>
 </ul>
 </section>
 <section id="explore-the-project" class="level2">
 <h2 class="anchored" data-anchor-id="explore-the-project">Explore the project</h2>
 <ul>
-<li><strong><a href="./writing-report.html">Read the full report</a></strong> — Introduction, methods, results, conclusions.</li>
-<li><strong><a href="./viz.html">Interactive visualizations</a></strong> — three interactive figures (HW5 deliverable).</li>
+<li><strong><a href="writing-report.html">Read the full report</a></strong> — Introduction, methods, results, conclusions.</li>
 <li><strong><a href="writing-report.pdf">Download the report (PDF)</a></strong> — downloadable, self-contained version of the full report.</li>
-<li><strong>Watch the 5-minute presentation</strong> <em>(link added in Phase 6)</em></li>
+<li><strong><a href="viz.html">Interactive visualizations</a></strong> — three interactive figures (HW5 deliverable): state choropleth, county distance histogram, and county scatter.</li>
+<li><strong>Watch the 5-minute presentation</strong> <em>(link added in Phase 6 — recording in progress.)</em></li>
 <li><strong><a href="https://github.com/shifosss/JSC370-Midterm-Proj">GitHub repository</a></strong> — full source, data, and pipeline.</li>
-<li><strong>Full computational pipeline</strong> <em>(option-c.qmd — linked on GitHub after Phase 5)</em></li>
+<li><strong>Full computational pipeline</strong> — the end-to-end Quarto notebook that produces the model-ready datasets and all figures lives on GitHub at <a href="https://github.com/shifosss/JSC370-Midterm-Proj/blob/main/option-c-trial-access/product/option-c.qmd"><code>option-c-trial-access/product/option-c.qmd</code></a>. It is not served here to keep the site focused; graders can view or re-run it directly from the repo.</li>
 </ul>
 
 

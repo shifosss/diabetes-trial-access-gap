@@ -2,148 +2,120 @@
 
 **Live website:** <https://shifosss.github.io/JSC370-Midterm-Proj/>
 
-- **Report:** <https://shifosss.github.io/JSC370-Midterm-Proj/writing-report.html>
-- **Interactive visualizations (HW5 deliverable):** <https://shifosss.github.io/JSC370-Midterm-Proj/viz.html> — Figures 1, 2, and 3 on that page are interactive.
-- **About / data sources:** <https://shifosss.github.io/JSC370-Midterm-Proj/about.html>
+- **Landing page** (summary + findings): <https://shifosss.github.io/JSC370-Midterm-Proj/>
+- **Full report**: <https://shifosss.github.io/JSC370-Midterm-Proj/writing-report.html>
+- **Downloadable PDF of the report**: <https://shifosss.github.io/JSC370-Midterm-Proj/writing-report.pdf>
+- **Interactive visualizations (HW5 deliverable)**: <https://shifosss.github.io/JSC370-Midterm-Proj/viz.html> — **Figures 1, 2, and 3 on that page are interactive.**
+- **About / data sources**: <https://shifosss.github.io/JSC370-Midterm-Proj/about.html>
 
-*The project started as the JSC370 midterm and is being extended into the final deliverable. The repository name (`JSC370-Midterm-Proj`) is preserved to keep URLs stable; the content below is the final-project version.*
+_The project began as the JSC370 midterm and is extended into the final deliverable. The repository name (`JSC370-Midterm-Proj`) is preserved to keep URLs stable; the content below is the final-project version._
 
-## Files To Grade
+## What this project studies
 
-This repository is centered on **Option C: Clinical Trial Access Gap for Type 2 Diabetes**.
+U.S. Type 2 diabetes clinical-trial access, at the state and county level. We link the ClinicalTrials.gov registry with diabetes burden, socioeconomic context, Medicaid expansion, rurality, and healthcare-infrastructure proxies to ask:
 
-**Written report (source):** `writing-report.qmd`
+1. **Descriptive aim** — how aligned is the geographic distribution of U.S. Type 2 diabetes trial sites with disease burden? Where are the largest access gaps?
+2. **Modeling aim** — once county-level socioeconomic and demographic structure is in the feature set, do trial-access features (local trial density, distance to the nearest site) add independent predictive signal for county-level diabetes prevalence?
 
-**Written report (rendered):** `writing-report.html`
+See the [full report](https://shifosss.github.io/JSC370-Midterm-Proj/writing-report.html) for the methods, results, and conclusions.
 
-**Pipeline source file:** `option-c-trial-access/product/option-c.qmd`
-
-**Pipeline rendered HTML:** `option-c-trial-access/product/option-c.html`
-
-If the HTML needs to be regenerated, run:
-
-```bash
-quarto render writing-report.qmd
-quarto render option-c-trial-access/product/option-c.qmd
-```
-
-## Project Focus
-
-The active workstream in this repository is **Option C**. It studies U.S. Type 2 diabetes clinical trial access by linking ClinicalTrials.gov trial-site data with diabetes burden, socioeconomic context, rurality, Medicaid expansion, and healthcare infrastructure proxies.
-
-The pipeline report (`option-c.qmd`) is an end-to-end workflow that:
-
-1. pulls and flattens U.S. Type 2 diabetes studies and site records from ClinicalTrials.gov,
-2. enriches them with CDC PLACES and Census/ACS context,
-3. constructs state-level coverage alignment measures,
-4. extends the analysis to counties (geocoding sites to FIPS, computing distances),
-5. exports model-ready state and county datasets, and
-6. fits county-level burden models using Elastic Net, Random Forest, and XGBoost.
-
-The written report (`writing-report.qmd`) summarizes the research question, methods, and preliminary results in a narrative format.
-
-Other option directories in this repository are archived reference material and are not part of the active submission.
-
-## Repository Layout
+## Repository layout
 
 ```
 .
-├── writing-report.qmd              # Written deliverable report
-├── writing-report.html             # Rendered written report
-├── jsc370.full.yml                 # Conda environment specification
+├── _quarto.yml                      # Site project config
+├── index.qmd                        # Landing page
+├── writing-report.qmd               # Full report (HTML + PDF)
+├── viz.qmd                          # Interactive visualizations (HW5)
+├── about.qmd                        # Author / data sources / acknowledgements
+├── styles.css                       # Site styles
+├── docs/                            # Rendered site (served by GitHub Pages)
+├── jsc370.full.yml                  # Conda environment specification
 ├── option-c-trial-access/
-│   ├── discover/
-│   │   ├── data_acquiring/         # Jupyter notebook for API pulls
-│   │   │   └── api_call_data_grabbing.ipynb
-│   │   ├── modified_data/          # Intermediate CSVs from discovery
-│   │   ├── results/                # EDA plots (PNG)
-│   │   ├── County_level_data_documentation.md
-│   │   ├── State_level_data_documentation.md
-│   │   └── EDA_Summary_and_Interpretation.md
+│   ├── discover/                    # Midterm-era exploration and EDA
+│   │   ├── data_acquiring/          # Jupyter notebook for initial API pulls
+│   │   └── results/                 # Static EDA figures (PNG)
 │   └── product/
-│       ├── option-c.qmd            # Pipeline report (main deliverable)
-│       ├── option-c.html           # Rendered pipeline report
-│       ├── option-c.ipynb          # Notebook precursor
+│       ├── option-c.qmd             # Full computational pipeline
+│       ├── _regenerate_cv_comparison.py   # Standalone re-runner for Aim 2 CV
 │       ├── data/
-│       │   ├── raw/                # Raw API responses (gitignored)
+│       │   ├── raw/                 # Raw API responses (gitignored)
 │       │   └── modified/
 │       │       ├── state_modeling_final.csv
 │       │       ├── county_modeling_final.csv
-│       │       └── temp/           # Intermediate tables from render
-│       └── results/                # Model output plots
-│           ├── elastic_net_actual_vs_predicted.png
-│           ├── elastic_net_coefficients.png
-│           ├── model_comparison_cv.png
-│           ├── rf_permutation_importance.png
-│           ├── shap_summary_plot.png
-│           └── shap_group_importance.png
-└── option-d-conflicts-of-interest/ # Archived, gitignored
+│       │       └── temp/            # Intermediate tables incl. model_comparison_cv.csv
+│       └── results/                 # Modeling output figures (PNG)
+├── tasks/                           # Project todos and lessons
+└── spec-*.md                        # Digested assignment specs
 ```
 
-## What The Reports Contain
+## Data sources
 
-### Pipeline Report (`option-c.qmd`)
+All data are obtained via public APIs. No restricted or human-subject data is used.
 
-1. **ClinicalTrials.gov Acquisition and Flattening** — pulls and flattens nested JSON into trial and site records
-2. **Burden and Context Enrichment** — joins CDC PLACES, ACS, rurality, Medicaid, NPI data
-3. **State Coverage Alignment Assembly** — coverage residuals and quartile classification
-4. **State Modeling Exports** — `state_modeling_final.csv`
-5. **County Extension** — geocodes sites to county FIPS, computes Haversine distances
-6. **Final-Dataset EDA** — correlation heatmaps, distributions, missingness
-7. **Ready for Modeling** — `county_modeling_final.csv`
-8. **Modeling: County Diabetes Burden** — Elastic Net, Random Forest, XGBoost with SHAP
+| Source | Purpose | Access |
+|---|---|---|
+| [ClinicalTrials.gov v2 API](https://clinicaltrials.gov/api/v2) | U.S. Type 2 diabetes trials and sites | Public, no key |
+| [CDC PLACES (Socrata)](https://chronicdata.cdc.gov/) | Age-adjusted diabetes prevalence and related measures | Public, no key |
+| [U.S. Census ACS 5-Year 2022](https://www.census.gov/data/developers/data-sets/acs-5year.html) | Socioeconomic and demographic covariates | API key required |
+| [FCC Census API](https://geo.fcc.gov/api/census/) | Reverse geocoding lat/lon → 5-digit county FIPS | Public, no key |
+| [2022 Census Gazetteer](https://www.census.gov/geographies/reference-files/time-series/geo/gazetteer-files.html) | Place-level lat/lon for city-to-county geocoding | Public download |
+| [NPI Registry](https://npiregistry.cms.hhs.gov/api-page) | Endocrinologist density and academic medical center presence | Public, no key |
+| 2020 Census Decennial | State-level rural population share | Public download |
+| Hardcoded Medicaid expansion lookup | State policy context (as of January 2024) | Curated |
 
-### Written Report (`writing-report.qmd`)
+## Reproducing the pipeline and site
 
-- Introduction, background, and research question
-- Methods (data acquisition, cleaning, wrangling)
-- Preliminary results with figures and tables
-
-## Main Data Sources
-
-- **ClinicalTrials.gov API**: U.S. Type 2 diabetes studies and site locations
-- **CDC PLACES**: diabetes burden and related population health measures (state and county)
-- **ACS / Census**: socioeconomic and demographic county/state covariates
-- **2022 Census Gazetteer**: place-level lat/lon for city-to-county geocoding
-- **FCC Census API**: reverse geocoding to 5-digit county FIPS codes
-- **NPI Registry**: endocrinologist density and academic medical center presence
-- **Census rurality data**: rural population context
-- **Medicaid expansion status**: state policy context
-
-## How To Reproduce
-
-1. Create and activate the conda environment:
+### 1. Environment
 
 ```bash
 conda env create -f jsc370.full.yml
 conda activate jsc370
 ```
 
-2. Create a `.env` file at the repo root with your Census API key:
+### 2. Census API key
+
+Create a `.env` file at the repo root:
 
 ```
 CENSUS_API_KEY=<your_key>
 ```
 
-3. Render the reports:
+You can request a free key at <https://api.census.gov/data/key_signup.html>.
+
+### 3. Regenerate the data
+
+The full pipeline (API pulls → geocoding → merges → modeling → figures) runs from the pipeline notebook:
 
 ```bash
 quarto render option-c-trial-access/product/option-c.qmd
-quarto render writing-report.qmd
 ```
 
-For live preview while editing:
+End-to-end this takes roughly 30 minutes, depending on network speed and CPU. Intermediate and final CSVs land in `option-c-trial-access/product/data/modified/` (and `temp/`).
+
+To regenerate **only** the Aim 2 CV comparison table used in the written report (about 60 seconds):
 
 ```bash
-quarto preview option-c-trial-access/product/option-c.qmd
+python option-c-trial-access/product/_regenerate_cv_comparison.py
 ```
 
-## Notes For Grading
+### 4. Build the site
 
-- The written report source is `writing-report.qmd`; the rendered submission is `writing-report.html`.
-- The pipeline source is `option-c-trial-access/product/option-c.qmd`; the rendered version is `option-c-trial-access/product/option-c.html`.
-- The final model-ready datasets are:
-  - `option-c-trial-access/product/data/modified/state_modeling_final.csv`
-  - `option-c-trial-access/product/data/modified/county_modeling_final.csv`
-- Figures produced by the pipeline are saved under `option-c-trial-access/product/results/`.
-- Figures produced during discovery EDA are under `option-c-trial-access/discover/results/`.
+```bash
+quarto render                                   # HTML for index, report, viz, about
+quarto render writing-report.qmd --to pdf       # Downloadable PDF of the report
+```
+
+The rendered site lands in `docs/`. GitHub Pages serves `docs/` from the `main` branch at <https://shifosss.github.io/JSC370-Midterm-Proj/>.
+
+## Key pipeline outputs (tracked in git)
+
+- `option-c-trial-access/product/data/modified/state_modeling_final.csv` — state-level modeling dataset (51 rows × 53 columns).
+- `option-c-trial-access/product/data/modified/county_modeling_final.csv` — county-level modeling dataset (3,221 rows × 42 columns).
+- `option-c-trial-access/product/data/modified/temp/model_comparison_cv.csv` — CV metrics for the Aim 2 comparison table.
+- `option-c-trial-access/product/results/*.png` — Aim 2 modeling figures (SHAP, permutation importance, Elastic Net coefficients, model comparison, etc.).
+- `option-c-trial-access/discover/results/*.png` — Aim 1 descriptive figures (state tile maps, coverage residual, county distance, etc.).
+
+## License
+
+See `LICENSE`.
