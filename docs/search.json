@@ -123,7 +123,7 @@
     "href": "index.html#explore-the-project",
     "title": "Clinical Trial Access Gap for Type 2 Diabetes",
     "section": "Explore the project",
-    "text": "Explore the project\n\nRead the full report — Introduction, methods, results, conclusions.\nInteractive visualizations — three interactive figures (HW5 deliverable).\nDownload the PDF (link added in Phase 4 once PDF format is wired)\nWatch the 5-minute presentation (link added in Phase 6)\nGitHub repository — full source, data, and pipeline.\nFull computational pipeline (option-c.qmd — linked on GitHub after Phase 5)"
+    "text": "Explore the project\n\nRead the full report — Introduction, methods, results, conclusions.\nInteractive visualizations — three interactive figures (HW5 deliverable).\nDownload the report (PDF) — downloadable, self-contained version of the full report.\nWatch the 5-minute presentation (link added in Phase 6)\nGitHub repository — full source, data, and pipeline.\nFull computational pipeline (option-c.qmd — linked on GitHub after Phase 5)"
   },
   {
     "objectID": "viz.html",

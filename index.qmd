@@ -20,7 +20,7 @@ Type 2 diabetes affects tens of millions of Americans and is heavily shaped by s
 
 - **[Read the full report](writing-report.qmd)** — Introduction, methods, results, conclusions.
 - **[Interactive visualizations](viz.qmd)** — three interactive figures (HW5 deliverable).
-- **Download the PDF** *(link added in Phase 4 once PDF format is wired)*
+- **[Download the report (PDF)](writing-report.pdf)** — downloadable, self-contained version of the full report.
 - **Watch the 5-minute presentation** *(link added in Phase 6)*
 - **[GitHub repository](https://github.com/shifosss/JSC370-Midterm-Proj)** — full source, data, and pipeline.
 - **Full computational pipeline** *(option-c.qmd — linked on GitHub after Phase 5)*

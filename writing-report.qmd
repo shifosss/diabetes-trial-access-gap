@@ -9,15 +9,25 @@ format:
     toc: true
     toc-depth: 3
     number-sections: true
+  pdf:
+    documentclass: article
+    geometry:
+      - margin=1in
+    number-sections: true
+    toc: false
+    fig-pos: "H"
+    pdf-engine: xelatex
+    papersize: letter
+    colorlinks: true
 ---
 
-> **Interactive figures.** On the [Interactive Visualizations page](viz.qmd), Figures 1, 2, and 3 are interactive versions of the state choropleth (Figure 1 below), the county distance histogram (Figure 3 below), and the county prevalence-versus-distance scatter (Figure 4 below). Full source and pipeline: <https://github.com/shifosss/JSC370-Midterm-Proj>.
+> **Interactive figures.** On the [Interactive Visualizations page](viz.qmd), Figures 1, 2, and 3 are interactive versions of this report's state choropleth (Figure 1) and county distance histogram (Figure 3), plus an interactive scatter of county prevalence versus trial distance. Full source and pipeline: <https://github.com/shifosss/JSC370-Midterm-Proj>.
 
 # Introduction
 
 ## Background and Motivation
 
-Diabetes mellitus represents a major public health crisis in the United States, exhibiting profound geographic and socioeconomic disparities [@barker2011]. Socioeconomic status — including poverty, education, and health insurance — plays a critical role in disease prevalence and management [@hillbriggs2021]. As the medical industry continues to develop new Type 2 diabetes therapies, a paradox remains: the opportunities to participate in clinical trials are not distributed equitably across the national geography. Trial locations are frequently driven by institutional infrastructure and sponsor logistics, creating a spatial mismatch that systematically excludes vulnerable, rural, and high-burden populations from research [@tanner2015; @unger2019]. This gap manifests as both physical travel barriers and a lack of local trial availability, directly limiting the generalizability of clinical research [@kirkwood2024].
+Diabetes mellitus represents a major public health crisis in the United States, exhibiting profound geographic and socioeconomic disparities (Barker et al., 2011). Socioeconomic status — including poverty, education, and health insurance — plays a critical role in disease prevalence and management (Hill-Briggs et al., 2021). As the medical industry continues to develop new Type 2 diabetes therapies, a paradox remains: the opportunities to participate in clinical trials are not distributed equitably across the national geography. Trial locations are frequently driven by institutional infrastructure and sponsor logistics, creating a spatial mismatch that systematically excludes vulnerable, rural, and high-burden populations from research (Tanner et al., 2015; Unger et al., 2019). This gap manifests as both physical travel barriers and a lack of local trial availability, directly limiting the generalizability of clinical research (Kirkwood et al., 2024).
 
 ## Research Questions and Hypotheses
 
@@ -66,16 +76,13 @@ The data pipeline aggregated 3,646 U.S. Type 2 diabetes studies and 47,118 site 
 
 ### State-Level Burden and Trial Density Do Not Line Up Cleanly
 
-::: {.columns}
-::: {.column width="50%"}
-![State-level diabetes age-adjusted prevalence (%).](option-c-trial-access/discover/results/map_diabetes_prevalence_tile.png){#fig-prev-map width=100%}
-:::
-::: {.column width="50%"}
-![State-level diabetes trial-site density (trials per 100k population).](option-c-trial-access/discover/results/map_trial_density_tile.png){#fig-density-map width=100%}
-:::
-:::
+::: {#fig-state-maps layout-ncol=2}
+![Diabetes age-adjusted prevalence (%).](option-c-trial-access/discover/results/map_diabetes_prevalence_tile.png){width=100%}
 
-**Figure 1.** Side-by-side state tile maps of diabetes age-adjusted prevalence (left) and trial density (right). The diabetes belt is visible in the South and Appalachia, but the trial-density map is more fragmented and includes several smaller, infrastructure-rich states that do not rank among the highest-burden areas. This visual divergence motivates an explicit comparison between observed and expected trial density.
+![Trial-site density (trials per 100k population).](option-c-trial-access/discover/results/map_trial_density_tile.png){width=100%}
+
+**Figure 1.** State tile maps: diabetes prevalence (left) vs. trial density (right). The diabetes belt in the South and Appalachia is visible in the left panel, while the trial-density map is more fragmented and includes several smaller, infrastructure-rich states that do not rank among the highest-burden areas.
+:::
 
 To formalize the mismatch, a state-level *coverage residual* was computed: observed trial density minus the trial density expected for a state's diabetes-burden decile. Negative values indicate under-coverage relative to peer states with similar burden; positive values indicate over-coverage.
 
@@ -125,13 +132,7 @@ State aggregates mask within-state variation. Of 3,221 counties, only 856 (26.6%
 
 **Figure 3.** County-level distance distribution. For no-site counties, travel distance is often substantial. A state can look moderately well covered in aggregate while still leaving most of its counties without feasible local trial access. An interactive version with a per-state filter is available on the [Visualizations page](viz.qmd).
 
-### Endocrinologist Density and Trial Density Co-Occur
-
-Among counties that host at least one trial site, those with higher endocrinologist density also tend to have higher trial density (Figure 4). This bivariate association is descriptive — both variables may simply reflect the presence of academic medical centers or large health systems.
-
-![Bivariate relationship between county endocrinologist density and county trial density. Each point is a county with at least one trial site; the association is positive but noisy.](option-c-trial-access/discover/results/county_endo_vs_trials.png){#fig-endo width=85%}
-
-**Figure 4.** The co-occurrence is consistent with trial placement tracking institutional infrastructure, but the bivariate scatter alone cannot distinguish infrastructure-driven placement from other explanations (e.g., population size driving both). The predictive models in Aim 2 determine whether these features contribute independent predictive signal beyond what SES covariates already capture.
+Among counties with at least one trial site, endocrinologist density and trial density co-occur — both likely reflect academic medical centers and large health systems. The bivariate scatter (available on the [Visualizations page](viz.qmd)) is descriptive only; the Aim 2 models test whether these features contribute independent predictive signal.
 
 ## Modeling: Trial-Access Features Add Little Predictive Lift (Aim 2)
 
@@ -188,37 +189,31 @@ display_out
 
 Table 4 reports the CV metrics for the six model–configuration combinations. Across all three model families the Full model's R² improvement over the SES-only baseline is modest in absolute terms; the trial-access variables do not substantially reduce cross-validated prediction error. The gradient-boosted model achieves the highest R² of the three, and the relative ranking (XGBoost ≳ Random Forest > Elastic Net) is stable across configurations, consistent with the non-linear models capturing interactions among SES predictors that linear regularization cannot.
 
-![SES-only vs. Full model R² for Elastic Net, Random Forest, and XGBoost, with Δ annotations.](option-c-trial-access/product/results/model_comparison_cv.png){#fig-cv-compare width=80%}
+![SES-only vs. Full model R² for Elastic Net, Random Forest, and XGBoost, with Δ annotations.](option-c-trial-access/product/results/model_comparison_cv.png){#fig-cv-compare width=75%}
 
-**Figure 5.** Grouped-bar comparison of cross-validated R² for each model family in the SES-only (blue) and Full (red) configurations. The annotated Δ values make the incremental lift explicit.
+**Figure 4.** Grouped-bar comparison of cross-validated R² for each model family in the SES-only (blue) and Full (red) configurations. The annotated Δ values make the incremental lift explicit.
 
 ### Feature Importance
 
 The feature-importance analyses tell a consistent story. Regardless of which lens is used — standardized Elastic Net coefficients, Random Forest permutation importance, or SHAP values from XGBoost — socioeconomic and demographic variables dominate, and the two trial-access features sit near the bottom of the ranking.
 
-::: {.columns}
-::: {.column width="50%"}
-![Elastic Net standardized coefficients. Red bars are trial-access features; blue bars are socioeconomic/demographic.](option-c-trial-access/product/results/elastic_net_coefficients.png){#fig-enet width=100%}
-:::
-::: {.column width="50%"}
-![Random Forest permutation importance (mean decrease in CV R²). Red: trial-access; blue: SES/demographic.](option-c-trial-access/product/results/rf_permutation_importance.png){#fig-rfperm width=100%}
-:::
+::: {#fig-importance layout-ncol=2}
+![Elastic Net standardized coefficients (red: trial-access; blue: SES/demographic).](option-c-trial-access/product/results/elastic_net_coefficients.png){width=100%}
+
+![Random Forest permutation importance (mean decrease in CV R²).](option-c-trial-access/product/results/rf_permutation_importance.png){width=100%}
+
+**Figure 5.** Feature importance from the linear (left) and tree-ensemble (right) models. Both rankings place the trial-access variables near the bottom; poverty, % non-Hispanic Black, % Hispanic, median household income, and insurance status carry the largest weights.
 :::
 
-**Figure 6.** Feature importance from the linear (left) and tree-ensemble (right) baselines. Both rankings place the trial-access variables near the bottom: poverty rate, percent non-Hispanic Black, percent Hispanic, median household income, and insurance status carry the largest weights.
+::: {#fig-shap layout-ncol=2}
+![SHAP summary for XGBoost (per-county feature contributions).](option-c-trial-access/product/results/shap_summary_plot.png){width=100%}
 
-::: {.columns}
-::: {.column width="55%"}
-![SHAP summary for XGBoost: each dot is a county; horizontal position is the feature's contribution to the prediction for that county.](option-c-trial-access/product/results/shap_summary_plot.png){#fig-shap width=100%}
-:::
-::: {.column width="45%"}
-![Mean absolute SHAP value aggregated by predictor group. Trial Access (red) vs. the SES/demographic groups (green).](option-c-trial-access/product/results/shap_group_importance.png){#fig-shapgroup width=100%}
-:::
+![Mean |SHAP value| aggregated by predictor group — Trial Access (red) vs. SES/demographic groups (green).](option-c-trial-access/product/results/shap_group_importance.png){width=100%}
+
+**Figure 6.** SHAP decomposition of XGBoost predictions. The summary plot (left) places the structural SES predictors — % non-Hispanic Black, poverty, income, % Hispanic — at the top. The group-aggregated view (right) shows the trial-access block contributing an order of magnitude less than Economic or Demographic groups.
 :::
 
-**Figure 7.** SHAP decomposition of XGBoost predictions. The summary plot (left) places the structural SES predictors — % non-Hispanic Black, poverty, income, % Hispanic — at the top. The group-aggregated view (right) shows that trial-access predictors together contribute an order of magnitude less to the mean absolute SHAP value than the Economic and Demographic groups.
-
-Taken together, Figures 5–7 and Table 4 support Hypothesis 2: **trial-access features add little predictive signal for county-level diabetes burden once socioeconomic and demographic structure is already in the model.** The improvements from the Full model are small enough to be consistent with noise in the CV splits, and the feature-importance rankings place trial access below every major SES block.
+Taken together, Figures 4–6 and Table 4 support Hypothesis 2: **trial-access features add little predictive signal for county-level diabetes burden once socioeconomic and demographic structure is already in the model.** The Full-model ΔR² values are small enough to be consistent with CV-split noise, and every feature-importance lens places trial access below every major SES block.
 
 # Conclusions and Summary
 
@@ -238,10 +233,12 @@ Taken together, Figures 5–7 and Table 4 support Hypothesis 2: **trial-access f
 
 # References {.unnumbered}
 
-::: {#refs}
-- [@barker2011] Barker, L. E., Kirtland, K. A., Gregg, E. W., Geiss, L. S., & Thompson, T. J. (2011). Geographic distribution of diagnosed diabetes in the U.S.: A diabetes belt. *American Journal of Preventive Medicine*, 40(4), 434–439. <https://doi.org/10.1016/j.amepre.2010.12.019>
-- [@hillbriggs2021] Hill-Briggs, F., Adler, N. E., Berkowitz, S. A., Chin, M. H., Gary-Webb, T. L., Navas-Acien, A., Thornton, P. L., & Haire-Joshu, D. (2021). Social determinants of health and diabetes: A scientific review. *Diabetes Care*, 44(1), 258–279. <https://doi.org/10.2337/dci20-0053>
-- [@kirkwood2024] Kirkwood, M. K., Schenkel, C., Hinshaw, D. C., Bruinooge, S. S., Waterhouse, D. M., Peppercorn, J. M., Subbiah, I. M., & Levit, L. A. (2024). State of geographic access to cancer treatment trials in the United States: Are studies located where patients live? *JCO Oncology Practice*, 20(3), 427–437.
-- [@tanner2015] Tanner, A., Kim, S. H., Friedman, D. B., Foster, C., & Bergeron, C. D. (2015). Barriers to medical research participation as perceived by clinical trial investigators: Communicating with rural and African American communities. *Journal of Health Communication*, 20(1), 88–96. <https://doi.org/10.1080/10810730.2014.908985>
-- [@unger2019] Unger, J. M., Vaidya, R., Hershman, D. L., Minasian, L. M., & Fleury, M. E. (2019). Systematic review and meta-analysis of the magnitude of structural, clinical, and physician and patient barriers to cancer clinical trial participation. *Journal of the National Cancer Institute*, 111(3), 245–255.
-:::
+Barker, L. E., Kirtland, K. A., Gregg, E. W., Geiss, L. S., & Thompson, T. J. (2011). Geographic distribution of diagnosed diabetes in the U.S.: A diabetes belt. *American Journal of Preventive Medicine*, 40(4), 434–439. <https://doi.org/10.1016/j.amepre.2010.12.019>
+
+Hill-Briggs, F., Adler, N. E., Berkowitz, S. A., Chin, M. H., Gary-Webb, T. L., Navas-Acien, A., Thornton, P. L., & Haire-Joshu, D. (2021). Social determinants of health and diabetes: A scientific review. *Diabetes Care*, 44(1), 258–279. <https://doi.org/10.2337/dci20-0053>
+
+Kirkwood, M. K., Schenkel, C., Hinshaw, D. C., Bruinooge, S. S., Waterhouse, D. M., Peppercorn, J. M., Subbiah, I. M., & Levit, L. A. (2024). State of geographic access to cancer treatment trials in the United States: Are studies located where patients live? *JCO Oncology Practice*, 20(3), 427–437.
+
+Tanner, A., Kim, S. H., Friedman, D. B., Foster, C., & Bergeron, C. D. (2015). Barriers to medical research participation as perceived by clinical trial investigators: Communicating with rural and African American communities. *Journal of Health Communication*, 20(1), 88–96. <https://doi.org/10.1080/10810730.2014.908985>
+
+Unger, J. M., Vaidya, R., Hershman, D. L., Minasian, L. M., & Fleury, M. E. (2019). Systematic review and meta-analysis of the magnitude of structural, clinical, and physician and patient barriers to cancer clinical trial participation. *Journal of the National Cancer Institute*, 111(3), 245–255.
