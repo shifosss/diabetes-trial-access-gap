@@ -1,65 +1,16 @@
-/* JSC370 Final Project — site styles */
+/* JSC370 Final Project — supplementary site styles */
+/* Primary styling lives in theme.scss. Keep overrides here minimal. */
 
-h1, h1.title {
-  font-size: 32px;
-  font-weight: 600;
-}
-
-h2 {
-  font-size: 26px;
-  font-weight: 500;
-  margin-top: 1.8em;
-}
-
-h3 {
-  font-size: 20px;
-  font-weight: 500;
-}
-
-h4 {
-  font-size: 17px;
-}
-
-.subtitle {
-  font-size: 18px;
-  font-weight: 300;
-  opacity: 0.9;
-}
-
-img {
-  display: block;
-  margin: 1em auto;
+/* Make Plotly charts breathe within the reading column */
+.plotly-graph-div {
+  margin: 1.4em auto;
   max-width: 100%;
 }
 
-.quarto-title-meta,
-.quarto-title-meta-author,
-.quarto-title-meta-heading {
-  opacity: 0.75;
-}
-
-blockquote {
-  border-left: 3px solid #5dade2;
-  padding: 0.3em 1em;
-  margin: 1.2em 0;
-  background: rgba(93, 173, 226, 0.08);
-}
-
-table {
-  margin: 1em auto;
-}
-
-th {
-  font-weight: 600;
-}
-
-code {
-  font-size: 14px;
-}
-
-figcaption, .figure-caption {
-  font-size: 14px;
-  opacity: 0.85;
-  text-align: center;
-  margin-top: 0.5em;
+/* Print styling for anyone printing the HTML report */
+@media print {
+  .navbar, .page-footer, #TOC, nav#TOC { display: none !important; }
+  main, .content { max-width: 100% !important; }
+  a { color: inherit; text-decoration: none; }
+  figcaption { font-size: 11px; }
 }

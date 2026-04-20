@@ -34,9 +34,15 @@ website:
 
 format:
   html:
-    theme: darkly
+    theme:
+      - cosmo
+      - theme.scss
     toc: true
     toc-depth: 3
+    toc-location: right
+    page-layout: article
+    fontsize: 1.0625rem
+    linestretch: 1.65
     css: styles.css
 
 execute:

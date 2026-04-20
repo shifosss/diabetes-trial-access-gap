@@ -22,26 +22,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -58,10 +39,10 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b758ccaa5987ceb1b75504551e579abf.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-073bf2f059d922ccedef44d6b9c89c1d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-2ec1ecde4794cf0ca2676fdbadd3167b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-3589c2f63e4191a66baddaf52dedbade.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -167,7 +148,6 @@ div.csl-indent {
   <ul class="collapse">
   <li><a href="#state-level-burden-and-trial-density-do-not-line-up-cleanly" id="toc-state-level-burden-and-trial-density-do-not-line-up-cleanly" class="nav-link" data-scroll-target="#state-level-burden-and-trial-density-do-not-line-up-cleanly"><span class="header-section-number">3.1.1</span> State-Level Burden and Trial Density Do Not Line Up Cleanly</a></li>
   <li><a href="#county-level-access-gaps-are-large" id="toc-county-level-access-gaps-are-large" class="nav-link" data-scroll-target="#county-level-access-gaps-are-large"><span class="header-section-number">3.1.2</span> County-Level Access Gaps Are Large</a></li>
-  <li><a href="#endocrinologist-density-and-trial-density-co-occur" id="toc-endocrinologist-density-and-trial-density-co-occur" class="nav-link" data-scroll-target="#endocrinologist-density-and-trial-density-co-occur"><span class="header-section-number">3.1.3</span> Endocrinologist Density and Trial Density Co-Occur</a></li>
   </ul></li>
   <li><a href="#modeling-trial-access-features-add-little-predictive-lift-aim-2" id="toc-modeling-trial-access-features-add-little-predictive-lift-aim-2" class="nav-link" data-scroll-target="#modeling-trial-access-features-add-little-predictive-lift-aim-2"><span class="header-section-number">3.2</span> Modeling: Trial-Access Features Add Little Predictive Lift (Aim 2)</a>
   <ul class="collapse">
@@ -177,7 +157,7 @@ div.csl-indent {
   <li><a href="#conclusions-and-summary" id="toc-conclusions-and-summary" class="nav-link" data-scroll-target="#conclusions-and-summary"><span class="header-section-number">4</span> Conclusions and Summary</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
-</nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="writing-report.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -215,13 +195,13 @@ div.csl-indent {
 
 
 <blockquote class="blockquote">
-<p><strong>Interactive figures.</strong> On the <a href="./viz.html">Interactive Visualizations page</a>, Figures 1, 2, and 3 are interactive versions of the state choropleth (Figure 1 below), the county distance histogram (Figure 3 below), and the county prevalence-versus-distance scatter (Figure 4 below). Full source and pipeline: <a href="https://github.com/shifosss/JSC370-Midterm-Proj" class="uri">https://github.com/shifosss/JSC370-Midterm-Proj</a>.</p>
+<p><strong>Interactive figures.</strong> On the <a href="./viz.html">Interactive Visualizations page</a>, Figures 1, 2, and 3 are interactive versions of this report’s state choropleth (Figure 1) and county distance histogram (Figure 3), plus an interactive scatter of county prevalence versus trial distance. Full source and pipeline: <a href="https://github.com/shifosss/JSC370-Midterm-Proj" class="uri">https://github.com/shifosss/JSC370-Midterm-Proj</a>.</p>
 </blockquote>
 <section id="introduction" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
 <section id="background-and-motivation" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="background-and-motivation"><span class="header-section-number">1.1</span> Background and Motivation</h2>
-<p>Diabetes mellitus represents a major public health crisis in the United States, exhibiting profound geographic and socioeconomic disparities <span class="citation" data-cites="barker2011">[@barker2011]</span>. Socioeconomic status — including poverty, education, and health insurance — plays a critical role in disease prevalence and management <span class="citation" data-cites="hillbriggs2021">[@hillbriggs2021]</span>. As the medical industry continues to develop new Type 2 diabetes therapies, a paradox remains: the opportunities to participate in clinical trials are not distributed equitably across the national geography. Trial locations are frequently driven by institutional infrastructure and sponsor logistics, creating a spatial mismatch that systematically excludes vulnerable, rural, and high-burden populations from research <span class="citation" data-cites="tanner2015 unger2019">[@tanner2015; @unger2019]</span>. This gap manifests as both physical travel barriers and a lack of local trial availability, directly limiting the generalizability of clinical research <span class="citation" data-cites="kirkwood2024">[@kirkwood2024]</span>.</p>
+<p>Diabetes mellitus represents a major public health crisis in the United States, exhibiting profound geographic and socioeconomic disparities (Barker et al., 2011). Socioeconomic status — including poverty, education, and health insurance — plays a critical role in disease prevalence and management (Hill-Briggs et al., 2021). As the medical industry continues to develop new Type 2 diabetes therapies, a paradox remains: the opportunities to participate in clinical trials are not distributed equitably across the national geography. Trial locations are frequently driven by institutional infrastructure and sponsor logistics, creating a spatial mismatch that systematically excludes vulnerable, rural, and high-burden populations from research (Tanner et al., 2015; Unger et al., 2019). This gap manifests as both physical travel barriers and a lack of local trial availability, directly limiting the generalizability of clinical research (Kirkwood et al., 2024).</p>
 </section>
 <section id="research-questions-and-hypotheses" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="research-questions-and-hypotheses"><span class="header-section-number">1.2</span> Research Questions and Hypotheses</h2>
@@ -269,32 +249,33 @@ div.csl-indent {
 <p>The data pipeline aggregated 3,646 U.S. Type 2 diabetes studies and 47,118 site records. Because 73.4% of U.S. counties host no diabetes trial site at all, state-level summaries are the primary descriptive lens; county-level results supplement them by quantifying the within-state variation that state aggregates mask.</p>
 <section id="state-level-burden-and-trial-density-do-not-line-up-cleanly" class="level3" data-number="3.1.1">
 <h3 data-number="3.1.1" class="anchored" data-anchor-id="state-level-burden-and-trial-density-do-not-line-up-cleanly"><span class="header-section-number">3.1.1</span> State-Level Burden and Trial Density Do Not Line Up Cleanly</h3>
-<div class="columns">
-<div class="column" style="width:50%;">
-<div id="fig-prev-map" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-state-maps" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-prev-map-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="option-c-trial-access/discover/results/map_diabetes_prevalence_tile.png" class="img-fluid figure-img" style="width:100.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-prev-map-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: State-level diabetes age-adjusted prevalence (%).
-</figcaption>
+<div aria-describedby="fig-state-maps-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="option-c-trial-access/discover/results/map_diabetes_prevalence_tile.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Diabetes age-adjusted prevalence (%).</figcaption>
 </figure>
 </div>
-</div><div class="column" style="width:50%;">
-<div id="fig-density-map" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-density-map-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="option-c-trial-access/discover/results/map_trial_density_tile.png" class="img-fluid figure-img" style="width:100.0%">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-density-map-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: State-level diabetes trial-site density (trials per 100k population).
-</figcaption>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="option-c-trial-access/discover/results/map_trial_density_tile.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Trial-site density (trials per 100k population).</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p><strong>Figure 1.</strong> Side-by-side state tile maps of diabetes age-adjusted prevalence (left) and trial density (right). The diabetes belt is visible in the South and Appalachia, but the trial-density map is more fragmented and includes several smaller, infrastructure-rich states that do not rank among the highest-burden areas. This visual divergence motivates an explicit comparison between observed and expected trial density.</p>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-state-maps-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: <strong>Figure 1.</strong> State tile maps: diabetes prevalence (left) vs.&nbsp;trial density (right). The diabetes belt in the South and Appalachia is visible in the left panel, while the trial-density map is more fragmented and includes several smaller, infrastructure-rich states that do not rank among the highest-burden areas.
+</figcaption>
+</figure>
+</div>
 <p>To formalize the mismatch, a state-level <em>coverage residual</em> was computed: observed trial density minus the trial density expected for a state’s diabetes-burden decile. Negative values indicate under-coverage relative to peer states with similar burden; positive values indicate over-coverage.</p>
 <div id="fig-residual" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -302,7 +283,7 @@ Figure&nbsp;2: State-level diabetes trial-site density (trials per 100k populati
 <img src="option-c-trial-access/discover/results/coverage_residual_outlier_bars.png" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-residual-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Coverage residual outliers by state. Each bar is a state’s coverage residual (observed trial density minus the mean density for its diabetes-burden decile). Bars are colored by the percentage of the state’s trials that are industry-sponsored.
+Figure&nbsp;2: Coverage residual outliers by state. Each bar is a state’s coverage residual (observed trial density minus the mean density for its diabetes-burden decile). Bars are colored by the percentage of the state’s trials that are industry-sponsored.
 </figcaption>
 </figure>
 </div>
@@ -483,26 +464,12 @@ Figure&nbsp;3: Coverage residual outliers by state. Each bar is a state’s cove
 <img src="option-c-trial-access/discover/results/county_distance_histogram.png" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-distance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: Distance to the nearest diabetes trial site for counties without a local site.
+Figure&nbsp;3: Distance to the nearest diabetes trial site for counties without a local site.
 </figcaption>
 </figure>
 </div>
 <p><strong>Figure 3.</strong> County-level distance distribution. For no-site counties, travel distance is often substantial. A state can look moderately well covered in aggregate while still leaving most of its counties without feasible local trial access. An interactive version with a per-state filter is available on the <a href="./viz.html">Visualizations page</a>.</p>
-</section>
-<section id="endocrinologist-density-and-trial-density-co-occur" class="level3" data-number="3.1.3">
-<h3 data-number="3.1.3" class="anchored" data-anchor-id="endocrinologist-density-and-trial-density-co-occur"><span class="header-section-number">3.1.3</span> Endocrinologist Density and Trial Density Co-Occur</h3>
-<p>Among counties that host at least one trial site, those with higher endocrinologist density also tend to have higher trial density (Figure 4). This bivariate association is descriptive — both variables may simply reflect the presence of academic medical centers or large health systems.</p>
-<div id="fig-endo" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-endo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="option-c-trial-access/discover/results/county_endo_vs_trials.png" class="img-fluid figure-img" style="width:85.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-endo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5: Bivariate relationship between county endocrinologist density and county trial density. Each point is a county with at least one trial site; the association is positive but noisy.
-</figcaption>
-</figure>
-</div>
-<p><strong>Figure 4.</strong> The co-occurrence is consistent with trial placement tracking institutional infrastructure, but the bivariate scatter alone cannot distinguish infrastructure-driven placement from other explanations (e.g., population size driving both). The predictive models in Aim 2 determine whether these features contribute independent predictive signal beyond what SES covariates already capture.</p>
+<p>Among counties with at least one trial site, endocrinologist density and trial density co-occur — both likely reflect academic medical centers and large health systems. The bivariate scatter (available on the <a href="./viz.html">Visualizations page</a>) is descriptive only; the Aim 2 models test whether these features contribute independent predictive signal.</p>
 </section>
 </section>
 <section id="modeling-trial-access-features-add-little-predictive-lift-aim-2" class="level2" data-number="3.2">
@@ -573,70 +540,72 @@ Figure&nbsp;5: Bivariate relationship between county endocrinologist density and
 <div id="fig-cv-compare" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-cv-compare-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="option-c-trial-access/product/results/model_comparison_cv.png" class="img-fluid figure-img" style="width:80.0%">
+<img src="option-c-trial-access/product/results/model_comparison_cv.png" class="img-fluid figure-img" style="width:75.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cv-compare-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6: SES-only vs.&nbsp;Full model R² for Elastic Net, Random Forest, and XGBoost, with Δ annotations.
+Figure&nbsp;4: SES-only vs.&nbsp;Full model R² for Elastic Net, Random Forest, and XGBoost, with Δ annotations.
 </figcaption>
 </figure>
 </div>
-<p><strong>Figure 5.</strong> Grouped-bar comparison of cross-validated R² for each model family in the SES-only (blue) and Full (red) configurations. The annotated Δ values make the incremental lift explicit.</p>
+<p><strong>Figure 4.</strong> Grouped-bar comparison of cross-validated R² for each model family in the SES-only (blue) and Full (red) configurations. The annotated Δ values make the incremental lift explicit.</p>
 <section id="feature-importance" class="level3" data-number="3.2.1">
 <h3 data-number="3.2.1" class="anchored" data-anchor-id="feature-importance"><span class="header-section-number">3.2.1</span> Feature Importance</h3>
 <p>The feature-importance analyses tell a consistent story. Regardless of which lens is used — standardized Elastic Net coefficients, Random Forest permutation importance, or SHAP values from XGBoost — socioeconomic and demographic variables dominate, and the two trial-access features sit near the bottom of the ranking.</p>
-<div class="columns">
-<div class="column" style="width:50%;">
-<div id="fig-enet" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-importance" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-enet-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="option-c-trial-access/product/results/elastic_net_coefficients.png" class="img-fluid figure-img" style="width:100.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-enet-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7: Elastic Net standardized coefficients. Red bars are trial-access features; blue bars are socioeconomic/demographic.
-</figcaption>
+<div aria-describedby="fig-importance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="option-c-trial-access/product/results/elastic_net_coefficients.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Elastic Net standardized coefficients (red: trial-access; blue: SES/demographic).</figcaption>
 </figure>
 </div>
-</div><div class="column" style="width:50%;">
-<div id="fig-rfperm" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-rfperm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="option-c-trial-access/product/results/rf_permutation_importance.png" class="img-fluid figure-img" style="width:100.0%">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rfperm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;8: Random Forest permutation importance (mean decrease in CV R²). Red: trial-access; blue: SES/demographic.
-</figcaption>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="option-c-trial-access/product/results/rf_permutation_importance.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Random Forest permutation importance (mean decrease in CV R²).</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p><strong>Figure 6.</strong> Feature importance from the linear (left) and tree-ensemble (right) baselines. Both rankings place the trial-access variables near the bottom: poverty rate, percent non-Hispanic Black, percent Hispanic, median household income, and insurance status carry the largest weights.</p>
-<div class="columns">
-<div class="column" style="width:55%;">
-<div id="fig-shap" class="quarto-float quarto-figure quarto-figure-center anchored">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-importance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: <strong>Figure 5.</strong> Feature importance from the linear (left) and tree-ensemble (right) models. Both rankings place the trial-access variables near the bottom; poverty, % non-Hispanic Black, % Hispanic, median household income, and insurance status carry the largest weights.
+</figcaption>
+</figure>
+</div>
+<div id="fig-shap" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-shap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="option-c-trial-access/product/results/shap_summary_plot.png" class="img-fluid figure-img" style="width:100.0%">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="option-c-trial-access/product/results/shap_summary_plot.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>SHAP summary for XGBoost (per-county feature contributions).</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="option-c-trial-access/product/results/shap_group_importance.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Mean |SHAP value| aggregated by predictor group — Trial Access (red) vs.&nbsp;SES/demographic groups (green).</figcaption>
+</figure>
+</div>
+</div>
+</div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-shap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9: SHAP summary for XGBoost: each dot is a county; horizontal position is the feature’s contribution to the prediction for that county.
+Figure&nbsp;6: <strong>Figure 6.</strong> SHAP decomposition of XGBoost predictions. The summary plot (left) places the structural SES predictors — % non-Hispanic Black, poverty, income, % Hispanic — at the top. The group-aggregated view (right) shows the trial-access block contributing an order of magnitude less than Economic or Demographic groups.
 </figcaption>
 </figure>
 </div>
-</div><div class="column" style="width:45%;">
-<div id="fig-shapgroup" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-shapgroup-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="option-c-trial-access/product/results/shap_group_importance.png" class="img-fluid figure-img" style="width:100.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-shapgroup-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;10: Mean absolute SHAP value aggregated by predictor group. Trial Access (red) vs.&nbsp;the SES/demographic groups (green).
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<p><strong>Figure 7.</strong> SHAP decomposition of XGBoost predictions. The summary plot (left) places the structural SES predictors — % non-Hispanic Black, poverty, income, % Hispanic — at the top. The group-aggregated view (right) shows that trial-access predictors together contribute an order of magnitude less to the mean absolute SHAP value than the Economic and Demographic groups.</p>
-<p>Taken together, Figures 5–7 and Table 4 support Hypothesis 2: <strong>trial-access features add little predictive signal for county-level diabetes burden once socioeconomic and demographic structure is already in the model.</strong> The improvements from the Full model are small enough to be consistent with noise in the CV splits, and the feature-importance rankings place trial access below every major SES block.</p>
+<p>Taken together, Figures 4–6 and Table 4 support Hypothesis 2: <strong>trial-access features add little predictive signal for county-level diabetes burden once socioeconomic and demographic structure is already in the model.</strong> The Full-model ΔR² values are small enough to be consistent with CV-split noise, and every feature-importance lens places trial access below every major SES block.</p>
 </section>
 </section>
 </section>
@@ -656,15 +625,11 @@ Figure&nbsp;10: Mean absolute SHAP value aggregated by predictor group. Trial Ac
 </section>
 <section id="references" class="level1 unnumbered">
 <h1 class="unnumbered">References</h1>
-<div id="refs" role="list">
-<ul>
-<li><span class="citation" data-cites="barker2011">[@barker2011]</span> Barker, L. E., Kirtland, K. A., Gregg, E. W., Geiss, L. S., &amp; Thompson, T. J. (2011). Geographic distribution of diagnosed diabetes in the U.S.: A diabetes belt. <em>American Journal of Preventive Medicine</em>, 40(4), 434–439. <a href="https://doi.org/10.1016/j.amepre.2010.12.019" class="uri">https://doi.org/10.1016/j.amepre.2010.12.019</a></li>
-<li><span class="citation" data-cites="hillbriggs2021">[@hillbriggs2021]</span> Hill-Briggs, F., Adler, N. E., Berkowitz, S. A., Chin, M. H., Gary-Webb, T. L., Navas-Acien, A., Thornton, P. L., &amp; Haire-Joshu, D. (2021). Social determinants of health and diabetes: A scientific review. <em>Diabetes Care</em>, 44(1), 258–279. <a href="https://doi.org/10.2337/dci20-0053" class="uri">https://doi.org/10.2337/dci20-0053</a></li>
-<li><span class="citation" data-cites="kirkwood2024">[@kirkwood2024]</span> Kirkwood, M. K., Schenkel, C., Hinshaw, D. C., Bruinooge, S. S., Waterhouse, D. M., Peppercorn, J. M., Subbiah, I. M., &amp; Levit, L. A. (2024). State of geographic access to cancer treatment trials in the United States: Are studies located where patients live? <em>JCO Oncology Practice</em>, 20(3), 427–437.</li>
-<li><span class="citation" data-cites="tanner2015">[@tanner2015]</span> Tanner, A., Kim, S. H., Friedman, D. B., Foster, C., &amp; Bergeron, C. D. (2015). Barriers to medical research participation as perceived by clinical trial investigators: Communicating with rural and African American communities. <em>Journal of Health Communication</em>, 20(1), 88–96. <a href="https://doi.org/10.1080/10810730.2014.908985" class="uri">https://doi.org/10.1080/10810730.2014.908985</a></li>
-<li><span class="citation" data-cites="unger2019">[@unger2019]</span> Unger, J. M., Vaidya, R., Hershman, D. L., Minasian, L. M., &amp; Fleury, M. E. (2019). Systematic review and meta-analysis of the magnitude of structural, clinical, and physician and patient barriers to cancer clinical trial participation. <em>Journal of the National Cancer Institute</em>, 111(3), 245–255.</li>
-</ul>
-</div>
+<p>Barker, L. E., Kirtland, K. A., Gregg, E. W., Geiss, L. S., &amp; Thompson, T. J. (2011). Geographic distribution of diagnosed diabetes in the U.S.: A diabetes belt. <em>American Journal of Preventive Medicine</em>, 40(4), 434–439. <a href="https://doi.org/10.1016/j.amepre.2010.12.019" class="uri">https://doi.org/10.1016/j.amepre.2010.12.019</a></p>
+<p>Hill-Briggs, F., Adler, N. E., Berkowitz, S. A., Chin, M. H., Gary-Webb, T. L., Navas-Acien, A., Thornton, P. L., &amp; Haire-Joshu, D. (2021). Social determinants of health and diabetes: A scientific review. <em>Diabetes Care</em>, 44(1), 258–279. <a href="https://doi.org/10.2337/dci20-0053" class="uri">https://doi.org/10.2337/dci20-0053</a></p>
+<p>Kirkwood, M. K., Schenkel, C., Hinshaw, D. C., Bruinooge, S. S., Waterhouse, D. M., Peppercorn, J. M., Subbiah, I. M., &amp; Levit, L. A. (2024). State of geographic access to cancer treatment trials in the United States: Are studies located where patients live? <em>JCO Oncology Practice</em>, 20(3), 427–437.</p>
+<p>Tanner, A., Kim, S. H., Friedman, D. B., Foster, C., &amp; Bergeron, C. D. (2015). Barriers to medical research participation as perceived by clinical trial investigators: Communicating with rural and African American communities. <em>Journal of Health Communication</em>, 20(1), 88–96. <a href="https://doi.org/10.1080/10810730.2014.908985" class="uri">https://doi.org/10.1080/10810730.2014.908985</a></p>
+<p>Unger, J. M., Vaidya, R., Hershman, D. L., Minasian, L. M., &amp; Fleury, M. E. (2019). Systematic review and meta-analysis of the magnitude of structural, clinical, and physician and patient barriers to cancer clinical trial participation. <em>Journal of the National Cancer Institute</em>, 111(3), 245–255.</p>
 
 
 </section>
