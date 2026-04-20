@@ -2565,6 +2565,10 @@ model_comparison = pd.DataFrame({
 print(model_comparison.to_string(index=False))
 print()
 
+# Persist the table so downstream reports (writing-report.qmd) can
+# load the exact numbers without re-running the modeling pipeline.
+model_comparison.to_csv(TEMP / "model_comparison_cv.csv", index=False)
+
 # Delta R² summary
 for model_name, r2_ses, r2_full in [
     ("Elastic Net",    r2_ses_enet, r2),
