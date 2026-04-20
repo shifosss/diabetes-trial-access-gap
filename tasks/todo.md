@@ -30,7 +30,7 @@ This keeps HW5 unblockable early in the week and leaves the heavier writing/mode
 
 **Goal: a multi-page Quarto site renders locally and the skeleton is ready to host HW5.**
 
-- [ ] Create `_quarto.yml` at repo root:
+- [x] Create `_quarto.yml` at repo root:
   - `project.type: website`
   - `project.output-dir: docs`
   - `project.render: [index.qmd, writing-report.qmd, viz.qmd, about.qmd]` *(explicit allowlist so `option-c.qmd` does not auto-render into the site)*
@@ -39,32 +39,32 @@ This keeps HW5 unblockable early in the week and leaves the heavier writing/mode
   - Navbar right: GitHub icon → repo URL
   - Page footer with copyright
   - `format.html`: theme `darkly`, `toc: true`, `toc-depth: 3`, `css: styles.css` *(no `self-contained`)*
-- [ ] Create `index.qmd` stub (filled in later): title, 1-paragraph abstract, placeholder buttons for Report / Interactive Viz / PDF / Presentation / GitHub.
-- [ ] Create `about.qmd`: Chen Zhang (AlexZ), JSC370, project context, data sources, acknowledgements.
-- [ ] Create `styles.css` adapted from professor's example (heading sizes, centered images).
-- [ ] Add to `.gitignore`: `.quarto/`, `/_site/` (safety). **Keep `docs/` tracked.**
-- [ ] Git-rm the stale root-level HTML renders: `writing-report.html` and `option-c-trial-access/product/option-c.html` *(will be regenerated into `docs/` or linked via GitHub instead)*.
-- [ ] Local verify: `quarto render` → `docs/index.html` opens cleanly; navbar links all work.
+- [x] Create `index.qmd` stub (filled in later): title, 1-paragraph abstract, placeholder buttons for Report / Interactive Viz / PDF / Presentation / GitHub.
+- [x] Create `about.qmd`: Chen Zhang (AlexZ), JSC370, project context, data sources, acknowledgements.
+- [x] Create `styles.css` adapted from professor's example (heading sizes, centered images).
+- [x] Add to `.gitignore`: `.quarto/`, `/_site/` (safety). **Keep `docs/` tracked.**
+- [x] Git-rm the stale root-level HTML renders: `writing-report.html` and `option-c-trial-access/product/option-c.html` *(will be regenerated into `docs/` or linked via GitHub instead)*.
+- [x] Local verify: `quarto render` → `docs/index.html` opens cleanly; navbar links all work.
 
 ## Phase 1 — HW5 interactive figures (`viz.qmd`)  *(≈3–4 h)*
 
 Spec'd in `spec-hw5.md`. Data already on disk.
 
-- [ ] Create `viz.qmd` with header note: *"Figures 1, 2, 3 on this page are interactive."* (required for the Quercus submission line).
-- [ ] **Figure 1 — Choropleth (map).** Plotly `choropleth` on US states, dropdown toggling color layer: diabetes age-adjusted prevalence / trials per 100k / coverage residual / industry-sponsor share. Hover shows all four metrics + counts. Data: `state_modeling_final.csv`. Caption + 2–3 sentence description beneath.
-- [ ] **Figure 2 — Histogram (distribution).** Plotly histogram of nearest-site distance (km) for zero-site counties, with a **state dropdown** filter. Data: `county_modeling_final.csv` filtered to zero-site rows. Caption + 2–3 sentence description.
-- [ ] **Figure 3 — Scatter (bivariate).** Plotly scatter of county diabetes prevalence (y) vs. log distance to nearest site (x), colored by poverty rate, sized by log population, with Medicaid-expansion filter. Hover: county, state, FIPS, prevalence, distance, poverty, endocrinologist density. Caption + 2–3 sentence description.
-- [ ] Use `execute.echo: false` so no code chunks appear in rendered output.
-- [ ] Local render; verify interactivity (hover, dropdown, filter).
+- [x] Create `viz.qmd` with header note: *"Figures 1, 2, 3 on this page are interactive."* (required for the Quercus submission line).
+- [x] **Figure 1 — Choropleth (map).** Plotly `choropleth` on US states, dropdown toggling color layer: diabetes age-adjusted prevalence / trials per 100k / coverage residual / industry-sponsor share. Hover shows all four metrics + counts. Data: `state_modeling_final.csv`. Caption + 2–3 sentence description beneath.
+- [x] **Figure 2 — Histogram (distribution).** Plotly histogram of nearest-site distance (km) for zero-site counties, with a **state dropdown** filter. Data: `county_modeling_final.csv` filtered to zero-site rows. Caption + 2–3 sentence description.
+- [x] **Figure 3 — Scatter (bivariate).** Plotly scatter of county diabetes prevalence (y) vs. log distance to nearest site (x), colored by poverty rate, sized by log population, with Medicaid-expansion filter. Hover: county, state, FIPS, prevalence, distance, poverty, endocrinologist density. Caption + 2–3 sentence description.
+- [x] Use `execute.echo: false` so no code chunks appear in rendered output.
+- [x] Local render; verify interactivity (hover, dropdown, filter).
 
 ## Phase 2 — GitHub Pages deploy  *(≈30 min)* — **HW5 goes live here**
 
-- [ ] Commit `docs/` output on `main`.
-- [ ] GitHub → Settings → Pages → source = `main` / `/docs`. Save.
-- [ ] Wait ~2–5 min, visit `https://shifosss.github.io/JSC370-Midterm-Proj/`.
-- [ ] Sanity check (incognito): all three Plotly figures render, hovers and dropdowns work, captions present, "Figures 1, 2, 3 are interactive" note visible.
-- [ ] Update `README.md` top: live URL, "HW5 interactive figures live at `/viz.html`."
-- [ ] **HW5 is now submittable.** Capture: live URL + interactive-figure line for Quercus.
+- [x] Commit `docs/` output on `main`.
+- [x] GitHub → Settings → Pages → source = `main` / `/docs`. Save.
+- [x] Wait ~2–5 min, visit `https://shifosss.github.io/JSC370-Midterm-Proj/`.
+- [x] Sanity check (incognito): all three Plotly figures render, hovers and dropdowns work, captions present, "Figures 1, 2, 3 are interactive" note visible.
+- [x] Update `README.md` top: live URL, "HW5 interactive figures live at `/viz.html`."
+- [x] **HW5 is now submittable.** Capture: live URL + interactive-figure line for Quercus.
 
 ## Phase 3 — Expand `writing-report.qmd` to final structure  *(≈6–8 h)*
 
@@ -74,29 +74,29 @@ Current state: Introduction, Methods, Preliminary Results, Summary (preliminary)
 
 Verified: `option-c.qmd` (lines 2534–2565) already computes the SES-only vs. Full CV comparison; numbers are `print`'d and drawn into `model_comparison_cv.png` but **never saved as CSV**.
 
-- [ ] In `option-c.qmd`, add one line after `model_comparison = pd.DataFrame(...)`:
+- [x] In `option-c.qmd`, add one line after `model_comparison = pd.DataFrame(...)`:
   ```python
   model_comparison.to_csv(TEMP / "model_comparison_cv.csv", index=False)
   ```
-- [ ] Re-render `option-c.qmd` once to produce the CSV.
+- [x] Re-render `option-c.qmd` once to produce the CSV.
 
 ### 3b — Rewrite report content
 
-- [ ] Rename "Preliminary Results" to **"Results"**; keep descriptive Aim 1 content (state maps, coverage residual, Tables 1–3, county distance, endocrinologist vs. trials).
-- [ ] Add **Aim 2 modeling results** subsection:
+- [x] Rename "Preliminary Results" to **"Results"**; keep descriptive Aim 1 content (state maps, coverage residual, Tables 1–3, county distance, endocrinologist vs. trials).
+- [x] Add **Aim 2 modeling results** subsection:
   - Silent Python chunk loads `product/data/modified/temp/model_comparison_cv.csv` and renders a publication-ready Markdown table (Elastic Net / RF / XGBoost × SES-only vs. Full, with R² / RMSE / MAE and deltas).
   - Embed `model_comparison_cv.png`, `shap_summary_plot.png`, `shap_group_importance.png`, `rf_permutation_importance.png`, `elastic_net_coefficients.png` with captions.
   - Narrative: does adding trial-access features measurably improve prediction? (Hypothesis said no.)
-- [ ] Replace "For the final deliverable, the plan is…" with a **Conclusions and Summary** section: hypothesis verdict, mechanistic framing (infrastructure-driven placement, SES redundancy), limitations (cross-sectional, ecological, zero-inflated county trial density, cumulative registry vs. cross-sectional burden, Haversine ≠ drive time), bigger-picture takeaway.
-- [ ] Set `execute: { echo: false, warning: false, message: false }` globally so no raw code/output leaks into the rendered report.
-- [ ] Trim to **6–7 single-spaced pages**. Likely cuts: narrative duplication across the old Preliminary Results, methods over-verbosity. Pipeline-level detail stays in `option-c.qmd` on GitHub (linked, not submitted).
-- [ ] Verify image paths resolve from the new rendered location (`docs/writing-report.html` → paths still relative to repo root).
-- [ ] Add top-of-report note linking to interactive versions:
+- [x] Replace "For the final deliverable, the plan is…" with a **Conclusions and Summary** section: hypothesis verdict, mechanistic framing (infrastructure-driven placement, SES redundancy), limitations (cross-sectional, ecological, zero-inflated county trial density, cumulative registry vs. cross-sectional burden, Haversine ≠ drive time), bigger-picture takeaway.
+- [x] Set `execute: { echo: false, warning: false, message: false }` globally so no raw code/output leaks into the rendered report.
+- [~] Trim to **6–7 single-spaced pages**. _Current state: 13 pages after rewrite + one trim pass (dropped endo-trial scatter, collapsed columns → `layout-ncol=2`). The overage is driven by single-column image layout with 6 figures + 4 tables; content density matches a publication-ready report. Flagged; grader-dependent whether to trim further._
+- [x] Verify image paths resolve from the new rendered location (`docs/writing-report.html` → paths still relative to repo root).
+- [x] Add top-of-report note linking to interactive versions:
   > *"Interactive versions of Figure 1 (choropleth), Figure 3 (county distance), and Figure 4 (endocrinologist vs. trials) are available on the [Interactive Visualizations page](viz.html)."*
 
 ## Phase 4 — PDF rendering  *(≈1 h)*
 
-- [ ] Add dual format in `writing-report.qmd` frontmatter (HTML is **not** self-contained; PDF is standalone by nature):
+- [x] Add dual format in `writing-report.qmd` frontmatter (HTML is **not** self-contained; PDF is standalone by nature):
   ```yaml
   format:
     html:
@@ -108,38 +108,42 @@ Verified: `option-c.qmd` (lines 2534–2565) already computes the SES-only vs. F
       geometry: margin=1in
       fig-pos: "H"
   ```
-- [ ] Dual render sequence (single command):
+- [x] Dual render sequence (single command):
   ```bash
   quarto render writing-report.qmd --to all
   ```
   *(the plain `quarto render` used for the site only produces the first format; `--to all` on the report file forces both HTML and PDF.)*
-- [ ] Confirm both `docs/writing-report.html` and `docs/writing-report.pdf` land in place.
-- [ ] Link PDF from `index.qmd` as a "Download the report (PDF)" button.
+- [x] Confirm both `docs/writing-report.html` and `docs/writing-report.pdf` land in place.
+- [x] Link PDF from `index.qmd` as a "Download the report (PDF)" button.
 
 ## Phase 5 — Landing page + repo hygiene  *(≈1 h)*
 
-- [ ] Flesh out `index.qmd`:
+- [x] Flesh out `index.qmd`:
   - Project title + one-paragraph abstract (~150 words).
   - 3–4 headline findings as bullets (e.g., "73.4% of U.S. counties host no diabetes trial site; median travel distance 58.4 km").
   - Card/button row: Read full report | Interactive visualizations | Download PDF | Watch presentation | GitHub repo.
   - Short "Full computational pipeline" link → `option-c.qmd` raw file on GitHub (keeps it accessible without putting it on the site).
-- [ ] Update `README.md`:
+- [x] Update `README.md`:
   - Live website URL at the top.
   - One-sentence project description.
   - API / data source links (ClinicalTrials.gov v2, CDC PLACES/Socrata, Census ACS 2022, FCC Census API, NPI Registry, Census Gazetteer).
   - Reproduction steps: clone → `conda env create -f jsc370.full.yml` → add `.env` with `CENSUS_API_KEY` → `quarto render` (site) → `quarto render writing-report.qmd --to all` (PDF).
   - Link to the HW5 interactive page and the PDF.
-- [ ] Reproducibility spot-check: fresh clone to `/tmp`, follow README, confirm site renders end-to-end with no absolute paths.
-- [ ] Confirm `option-c-trial-access/product/data/modified/*.csv` is tracked in git (checklist item 5). Raw API pulls stay gitignored; reproduction instructions live in the notebook.
+- [x] Reproducibility spot-check: fresh clone to `/tmp`, follow README, confirm site renders end-to-end with no absolute paths.
+- [x] Confirm `option-c-trial-access/product/data/modified/*.csv` is tracked in git (checklist item 5). Raw API pulls stay gitignored; reproduction instructions live in the notebook.
 
-## Phase 6 — 5-minute recorded presentation  *(≈2–3 h)*
+## Phase 6 — 5-minute recorded presentation  *(≈2–3 h) — **needs AlexZ***
+
+Blocking: voice + screen recording is yours. Once the file exists I will embed the link.
 
 - [ ] Script (target ~5:00): summary (30s) → research questions (30s) → methods highlights (60s) → Aim 1 descriptive results (60s) → Aim 2 modeling results (60s) → interactive viz demo (45s) → conclusions + limitations (15s).
 - [ ] Screen-record a walkthrough of the live site in a clean browser window. QuickTime or OBS. Keep cursor visible.
 - [ ] Upload as unlisted YouTube video (easiest embedding + no Quercus size limits).
 - [ ] Embed the link in `index.qmd` ("Watch presentation") and add to `README.md`.
 
-## Phase 7 — Submission  *(≈30 min)*
+## Phase 7 — Submission  *(≈30 min) — **needs AlexZ***
+
+Blocking: Quercus submission uses your credentials.
 
 - [ ] Final `quarto render` on the whole site; then `quarto render writing-report.qmd --to pdf` to refresh the download; commit `docs/` and push `main`.
 - [ ] Incognito-tab verify: homepage, Report, Interactive Viz, About, PDF download, video link.
@@ -165,6 +169,25 @@ Verified: `option-c.qmd` (lines 2534–2565) already computes the SES-only vs. F
 4. **Kaleido not installed.** Only matters if we later decide to embed Plotly in the PDF. Not on the critical path.
 5. **Video hosting.** Unlisted YouTube is the default — confirm you're OK with that vs. a Google Drive link or direct Quercus upload.
 6. **PDF engine presence.** `quarto render --to pdf` needs a LaTeX stack (TinyTeX is fine). If absent, `quarto install tinytex` on first PDF render.
+
+## Status at handoff (2026-04-20)
+
+**Live and verified:** <https://shifosss.github.io/JSC370-Midterm-Proj/>
+
+- ✅ Phases 0–5 complete and deployed (scaffold → HW5 figures → Pages → report → PDF → landing/README).
+- ⏸️ Phase 6 waits on AlexZ's screen-recording + YouTube upload. Once you have the unlisted URL, tell me and I will embed it in `index.qmd` + `README.md` and push.
+- ⏸️ Phase 7 waits on the Quercus submission (your credentials).
+
+**HW5 submission line for Quercus** (ready to paste):
+> Link: <https://shifosss.github.io/JSC370-Midterm-Proj/viz.html>
+> Figures 1, 2, and 3 on the Interactive Visualizations page are interactive.
+
+**Final-project submission fields for Quercus** (ready once Phase 6 is recorded):
+> Repo: <https://github.com/shifosss/JSC370-Midterm-Proj>
+> Website: <https://shifosss.github.io/JSC370-Midterm-Proj/>
+> Video: _[your unlisted YouTube link]_
+
+**One residual trade-off flagged:** the PDF is 13 pages against a spec target of "about 6–7". The content is publication-dense (6 figures, 4 tables, four sections) and single-column. Shrinking further would mean either (a) cutting Aim 2 figures, or (b) moving to a two-column LaTeX template — both are risk/reward trade-offs I held off on without your sign-off.
 
 ## Total time budget
 
