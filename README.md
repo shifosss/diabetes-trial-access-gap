@@ -1,4 +1,12 @@
-# JSC370 Midterm Project
+# JSC370 Final Project — Clinical Trial Access Gap for Type 2 Diabetes
+
+**Live website:** <https://shifosss.github.io/JSC370-Midterm-Proj/>
+
+- **Report:** <https://shifosss.github.io/JSC370-Midterm-Proj/writing-report.html>
+- **Interactive visualizations (HW5 deliverable):** <https://shifosss.github.io/JSC370-Midterm-Proj/viz.html> — Figures 1, 2, and 3 on that page are interactive.
+- **About / data sources:** <https://shifosss.github.io/JSC370-Midterm-Proj/about.html>
+
+*The project started as the JSC370 midterm and is being extended into the final deliverable. The repository name (`JSC370-Midterm-Proj`) is preserved to keep URLs stable; the content below is the final-project version.*
 
 ## Files To Grade
 
