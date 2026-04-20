@@ -1,0 +1,26 @@
+---
+title: "Clinical Trial Access Gap for Type 2 Diabetes"
+subtitle: "A state- and county-level study of U.S. diabetes research access"
+author: "Chen Zhang"
+date: today
+---
+
+## Project Summary
+
+Type 2 diabetes affects tens of millions of Americans and is heavily shaped by socioeconomic structure. Clinical trials are the pathway through which new therapies are developed, yet their geographic placement is driven by sponsor logistics and institutional infrastructure rather than disease burden alone. This project links the ClinicalTrials.gov registry with CDC PLACES burden estimates, ACS socioeconomic data, rurality, Medicaid expansion status, and healthcare-infrastructure proxies to ask where U.S. diabetes-trial access is thinnest relative to need, and whether trial-access measures carry any predictive signal for county-level diabetes burden once socioeconomic structure is already accounted for.
+
+## Headline findings *(placeholder — updated in Phase 5)*
+
+- 3,646 U.S. Type 2 diabetes studies and 47,118 site records were flattened and geocoded to counties.
+- 73.4% of U.S. counties host no diabetes trial site; for those counties the median distance to the nearest site is 58.4 km, and 24% are more than 100 km away.
+- State-level coverage residuals reveal systematic mismatches between burden and trial density.
+- Modeling verdict and feature-importance takeaways will be filled in after Phase 3 (report expansion).
+
+## Explore the project
+
+- **[Read the full report](writing-report.qmd)** — Introduction, methods, results, conclusions.
+- **[Interactive visualizations](viz.qmd)** — three interactive figures (HW5 deliverable).
+- **Download the PDF** *(link added in Phase 4 once PDF format is wired)*
+- **Watch the 5-minute presentation** *(link added in Phase 6)*
+- **[GitHub repository](https://github.com/shifosss/JSC370-Midterm-Proj)** — full source, data, and pipeline.
+- **Full computational pipeline** *(option-c.qmd — linked on GitHub after Phase 5)*

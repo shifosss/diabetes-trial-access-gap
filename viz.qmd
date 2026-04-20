@@ -1,0 +1,11 @@
+---
+title: "Interactive Visualizations"
+subtitle: "HW5 deliverable — three interactive views of U.S. diabetes trial access"
+author: "Chen Zhang"
+date: today
+jupyter: python3
+---
+
+> **Figures 1, 2, and 3 on this page are interactive.** Hover, toggle layers, and apply filters to explore.
+
+*Content populated in Phase 1 (HW5 figures). Scaffolded page is live so the site skeleton renders cleanly.*

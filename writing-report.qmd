@@ -1,5 +1,6 @@
 ---
-title: "Deliverable Report: The Geography of Disparity in Diabetes Clinical Trial Access"
+title: "The Geography of Disparity in Diabetes Clinical Trial Access"
+subtitle: "JSC370 Final Project — Deliverable Report"
 author: "Chen Zhang"
 date: today
 format:
@@ -7,12 +8,9 @@ format:
     toc: true
     toc-depth: 3
     number-sections: true
-    self-contained: true
-    theme: cosmo
 ---
 
-# Github Repo
-https://github.com/shifosss/JSC370-Midterm-Proj
+> Full source and pipeline: [github.com/shifosss/JSC370-Midterm-Proj](https://github.com/shifosss/JSC370-Midterm-Proj). Interactive versions of selected figures are on the [Interactive Visualizations page](viz.qmd).
 
 # Introduction
 

@@ -1,0 +1,44 @@
+project:
+  type: website
+  output-dir: docs
+  render:
+    - index.qmd
+    - writing-report.qmd
+    - viz.qmd
+    - about.qmd
+  resources:
+    - option-c-trial-access/discover/results/**/*.png
+    - option-c-trial-access/product/results/**/*.png
+    - option-c-trial-access/product/data/modified/*.csv
+
+website:
+  title: "JSC370: Clinical Trial Access Gap for Type 2 Diabetes"
+  description: "A study of U.S. Type 2 diabetes clinical trial access by linking ClinicalTrials.gov trial-site data with diabetes burden, socioeconomic context, and healthcare infrastructure at state and county levels."
+  navbar:
+    left:
+      - text: "Home"
+        href: index.qmd
+      - text: "Report"
+        href: writing-report.qmd
+      - text: "Interactive Visualizations"
+        href: viz.qmd
+      - text: "About"
+        href: about.qmd
+    right:
+      - icon: github
+        href: https://github.com/shifosss/JSC370-Midterm-Proj
+        target: _blank
+  page-footer:
+    center: "© 2026 Chen Zhang · JSC370 Final Project · University of Toronto"
+
+format:
+  html:
+    theme: darkly
+    toc: true
+    toc-depth: 3
+    css: styles.css
+
+execute:
+  echo: false
+  warning: false
+  message: false

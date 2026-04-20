@@ -1,0 +1,31 @@
+---
+title: "About"
+---
+
+## Author
+
+**Chen Zhang (AlexZ)** — undergraduate, Data Science specialist, University of Toronto. Built as the JSC370 (Data Science II) final project in the Winter 2026 term, supervised by the JSC370 course team.
+
+## Project Context
+
+JSC370 final projects extend the student's midterm study with modeling, interactive visualizations, and a GitHub-hosted website. This project takes the Option C midterm topic — *Clinical Trial Access Gap for Type 2 Diabetes* — and layers predictive modeling (Elastic Net, Random Forest, XGBoost with 5-fold cross-validation and SHAP) on top of the descriptive state- and county-level analyses performed at the midterm stage.
+
+## Data Sources
+
+All data were acquired via public APIs. No human-subject or restricted data is used.
+
+- **ClinicalTrials.gov v2 API** — U.S. Type 2 diabetes studies (cumulative registry snapshot).
+- **CDC PLACES (Socrata)** — state and county age-adjusted diabetes prevalence (2022 release; BRFSS 2020–2022).
+- **American Community Survey 5-Year 2022** — state and county socioeconomic covariates.
+- **2022 Census Gazetteer + FCC Census API** — geocoding city/state strings to 5-digit county FIPS.
+- **NPI Registry** — endocrinologist density by county; state-level infrastructure counts.
+- **Census Rurality (2020 Decennial)** — rural population share by state.
+- **Medicaid expansion status** — static policy lookup as of January 2024.
+
+## Acknowledgements
+
+Built with [Quarto](https://quarto.org/), Python (pandas, scikit-learn, XGBoost, SHAP, Plotly), and hosted on [GitHub Pages](https://pages.github.com/). Thank you to the JSC370 teaching team for feedback on the midterm draft that shaped this final project.
+
+## Reproducibility
+
+This project ships with a conda environment specification (`jsc370.full.yml`), a `.env` template, and a reproducible Quarto pipeline. See the [README](https://github.com/shifosss/JSC370-Midterm-Proj) for step-by-step reproduction instructions.
