@@ -24,9 +24,9 @@ This project addresses two related but distinct aims:
 
 1. **Descriptive aim:** To what extent is the geographic distribution of U.S. Type 2 diabetes clinical trial sites aligned with the spatial pattern of disease burden? Where are the largest gaps between trial availability and local need?
 
-2. **Modeling aim:** After adjusting for county-level socioeconomic and demographic characteristics, are clinical trial access measures (local trial density and distance to the nearest trial site) independently associated with county-level diabetes prevalence, or is trial access largely redundant once structural disadvantage is accounted for?
+2. **Modeling aim:** Does including clinical trial access measures (local trial density and distance to the nearest trial site) improve prediction of county-level diabetes prevalence beyond a model that uses only socioeconomic and demographic characteristics, and which features carry the most predictive signal?
 
-We hypothesize that (1) trial sites are spatially concentrated in socioeconomically advantaged counties with established research infrastructure rather than in the highest-burden areas, and (2) trial-access variables will contribute little independent explanatory power for county diabetes burden once socioeconomic factors are controlled for, consistent with both trial placement and disease burden being downstream of the same structural determinants.
+We hypothesize that (1) trial sites are spatially concentrated in socioeconomically advantaged counties with established research infrastructure rather than in the highest-burden areas, and (2) adding trial-access variables to an SES-only prediction model will yield little improvement in cross-validated accuracy, consistent with trial access being a redundant predictor once socioeconomic structure is already in the feature set.
 
 # Methods
 
@@ -48,11 +48,15 @@ The raw nested JSON payloads from ClinicalTrials.gov were flattened into separat
 ## Analytical Tools and Modeling
 EDA and feature engineering used pandas and numpy. Visualizations were produced with seaborn and matplotlib. For the modeling aim, the response variable is **county-level age-adjusted diabetes prevalence** (`places_diabetes` from CDC PLACES). The 13 predictors fall into two groups: *trial-access variables* (log trial density, log distance to nearest site) and *socioeconomic/demographic covariates* (poverty rate, median household income, Gini index, uninsured rate, unemployment rate, bachelor's degree attainment, vehicle access, internet access, % non-Hispanic Black, % Hispanic, and log population).
 
-The modeling strategy proceeds in two stages:
+The modeling strategy has two components:
 
-**Primary inferential model.** An OLS linear regression estimates the association between each predictor and county diabetes prevalence, yielding standardized coefficients, 95% confidence intervals, and p-values. An Elastic Net variant (scikit-learn `ElasticNetCV`, 5-fold CV over five `l1_ratio` values and 100 `alpha` values, predictors standardized) is also fit to verify that coefficient estimates are stable under regularization when predictors are correlated. The inferential conclusions rest on the OLS/Elastic Net coefficients: whether trial-access variables are statistically associated with diabetes burden after adjustment for socioeconomic structure.
+**Baseline vs. augmented prediction comparison.** To isolate the predictive contribution of trial-access features, we fit each model in two configurations: an *SES-only baseline* using the 11 socioeconomic/demographic predictors, and a *full model* adding the 2 trial-access predictors (13 total). Comparing cross-validated R², RMSE, and MAE between configurations quantifies the incremental lift from trial-access features. Three model families are used:
 
-**Secondary ML models.** Random Forest (500 trees, permutation importance) and XGBoost (gradient-boosted trees) are fit on the same predictor set to check whether non-linear relationships or interactions meaningfully improve explanatory power beyond the linear model. SHAP (SHapley Additive exPlanations) values from the XGBoost model provide a supplementary view of relative feature importance, but SHAP measures predictive contribution, not statistical association, and is therefore treated as a secondary check rather than the primary evidence.
+- **Elastic Net** (scikit-learn `ElasticNetCV`, 5-fold CV over five `l1_ratio` values and 100 `alpha` values, predictors standardized): a regularized linear model whose coefficient magnitudes indicate feature importance under linearity.
+- **Random Forest** (scikit-learn `RandomForestRegressor`, 500 trees): a non-linear ensemble; permutation importance ranks features by their contribution to out-of-sample accuracy.
+- **XGBoost** (`xgboost.XGBRegressor`): a gradient-boosted tree ensemble that typically achieves the highest predictive accuracy among the three.
+
+**Feature importance analysis.** SHAP (SHapley Additive exPlanations) values from the best-performing model decompose each prediction into per-feature contributions, enabling group-level comparison of trial-access vs. socioeconomic predictor importance. Permutation importance from Random Forest and coefficient magnitudes from Elastic Net provide complementary views under different modeling assumptions.
 
 All models were evaluated under the same 5-fold cross-validation scheme (shuffled, `random_state=42`). Performance was compared on cross-validated R², RMSE, and MAE.
 
@@ -126,17 +130,17 @@ Among counties that host at least one trial site, those with higher endocrinolog
 
 ![Bivariate relationship between county endocrinologist density and county trial density. Each point represents a county with at least one trial site. The association is positive but noisy, and the scatter includes substantial variability.](option-c-trial-access/discover/results/county_endo_vs_trials.png){width=85%}
 
-This co-occurrence is consistent with the hypothesis that trial placement tracks institutional infrastructure, but the bivariate scatter alone cannot distinguish infrastructure-driven placement from other explanations (e.g., population size driving both). The multivariable models in the final analysis (Aim 2) are designed to disentangle these overlapping factors.
+This co-occurrence is consistent with the hypothesis that trial placement tracks institutional infrastructure, but the bivariate scatter alone cannot distinguish infrastructure-driven placement from other explanations (e.g., population size driving both). The predictive models in the final analysis (Aim 2) will determine whether these features contribute independent predictive signal for county diabetes burden beyond what SES covariates already capture.
 
 # Summary
 The descriptive results are consistent with the project hypothesis but do not yet confirm it. At the state level, trial density does not align smoothly with diabetes burden, and the coverage-residual analysis reveals systematic variation across burden deciles. At the county level, the majority of counties (73.4%) host no trial site, and travel distances for residents of those counties are often substantial. Endocrinologist density and trial density co-occur, but this bivariate pattern cannot isolate the role of infrastructure from confounding factors such as population size.
 
-These findings are exploratory and descriptive. They identify suggestive patterns but cannot determine whether trial-access variables retain an independent association with county-level diabetes prevalence (the response variable for Aim 2) once socioeconomic, demographic, and infrastructure factors are considered jointly.
+These findings are exploratory and descriptive. They identify suggestive patterns but cannot determine whether trial-access variables improve prediction of county-level diabetes prevalence (the response variable for Aim 2) beyond what socioeconomic and demographic features already capture.
 
 For the final deliverable, the plan is:
 
-1. **Primary inferential model:** Fit an OLS linear regression of county-level age-adjusted diabetes prevalence on trial-access variables (log trial density, log distance to nearest site) and socioeconomic/demographic covariates. Report standardized coefficients, confidence intervals, and p-values to assess whether trial-access variables are independently associated with diabetes burden after adjustment.
-2. **Secondary ML models:** Fit Random Forest and XGBoost models on the same predictor set to check whether non-linear relationships or interactions substantially improve explanatory power beyond the linear model. Use SHAP values from the best-performing ML model as a supplementary lens on relative feature importance, recognizing that SHAP measures predictive importance rather than statistical association.
+1. **Baseline vs. augmented prediction comparison:** Fit SES-only and SES + trial-access models (Elastic Net, Random Forest, XGBoost) under 5-fold cross-validation. Compare cross-validated R², RMSE, and MAE to quantify whether trial-access features improve out-of-sample prediction of county diabetes burden.
+2. **Feature importance analysis:** Use SHAP values and permutation importance from the best-performing model to rank which features carry the most predictive signal for county diabetes burden, and compare the aggregate importance of the trial-access group vs. the socioeconomic group.
 3. **Interactive visualizations:** Provide interactive maps and exploratory tools that allow users to examine the spatial relationships between burden, access, and infrastructure at both the state and county levels.
 
 # References
