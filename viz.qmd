@@ -4,8 +4,311 @@ subtitle: "HW5 deliverable — three interactive views of U.S. diabetes trial ac
 author: "Chen Zhang"
 date: today
 jupyter: python3
+format:
+  html:
+    page-layout: full
 ---
 
-> **Figures 1, 2, and 3 on this page are interactive.** Hover, toggle layers, and apply filters to explore.
+> **Figures 1, 2, and 3 on this page are interactive.** Hover any element for details, use the dropdowns to switch the displayed variable, and explore how diabetes burden, trial access, and socioeconomic structure line up across U.S. states and counties.
 
-*Content populated in Phase 1 (HW5 figures). Scaffolded page is live so the site skeleton renders cleanly.*
+```{python}
+#| label: setup
+import pandas as pd
+import numpy as np
+import plotly.graph_objects as go
+import plotly.io as pio
+
+pio.templates.default = "plotly_dark"
+
+STATE_CSV   = "option-c-trial-access/product/data/modified/state_modeling_final.csv"
+COUNTY_CSV  = "option-c-trial-access/product/data/modified/county_modeling_final.csv"
+MEDICAID_CSV = "option-c-trial-access/product/data/modified/temp/medicaid_expansion_status.csv"
+
+state_df    = pd.read_csv(STATE_CSV)
+county_df   = pd.read_csv(COUNTY_CSV)
+medicaid_df = pd.read_csv(MEDICAID_CSV)
+
+# 2-digit state FIPS -> USPS abbreviation (50 states + DC)
+FIPS_TO_ABBR = {
+    "01": "AL", "02": "AK", "04": "AZ", "05": "AR", "06": "CA", "08": "CO",
+    "09": "CT", "10": "DE", "11": "DC", "12": "FL", "13": "GA", "15": "HI",
+    "16": "ID", "17": "IL", "18": "IN", "19": "IA", "20": "KS", "21": "KY",
+    "22": "LA", "23": "ME", "24": "MD", "25": "MA", "26": "MI", "27": "MN",
+    "28": "MS", "29": "MO", "30": "MT", "31": "NE", "32": "NV", "33": "NH",
+    "34": "NJ", "35": "NM", "36": "NY", "37": "NC", "38": "ND", "39": "OH",
+    "40": "OK", "41": "OR", "42": "PA", "44": "RI", "45": "SC", "46": "SD",
+    "47": "TN", "48": "TX", "49": "UT", "50": "VT", "51": "VA", "53": "WA",
+    "54": "WV", "55": "WI", "56": "WY",
+}
+
+# Attach state abbrev + Medicaid expansion flag to the county frame
+county_df = county_df.copy()
+county_df["state_fips"] = county_df["geo_id"].astype(str).str.zfill(5).str[:2]
+county_df["stateabbr"]  = county_df["state_fips"].map(FIPS_TO_ABBR)
+county_df = county_df.merge(medicaid_df, on="stateabbr", how="left")
+county_df["medicaid_label"] = county_df["medicaid_expanded"].map(
+    {1: "Medicaid expanded", 0: "Non-expansion"}
+).fillna("Unknown")
+```
+
+## Figure 1 — State burden vs. trial availability (choropleth)
+
+```{python}
+#| label: fig1-choropleth
+# Layers for the dropdown: (display name, column, colorbar title, colorscale)
+layers = [
+    ("Diabetes prevalence (%)", "places_diabetes",
+        "Age-adjusted %", "YlOrRd"),
+    ("Trials per 100k",          "trials_per_100k",
+        "Trials / 100k",   "Blues"),
+    ("Coverage residual",        "coverage_residual",
+        "Residual (trials/100k)", "RdBu"),
+    ("Industry-sponsor share (%)", "industry_pct",
+        "% industry",      "Purples"),
+]
+
+hover_template = (
+    "<b>%{location}</b><br>"
+    "Diabetes prevalence: %{customdata[0]:.1f}%<br>"
+    "Trials per 100k: %{customdata[1]:.2f}<br>"
+    "Coverage residual: %{customdata[2]:+.2f}<br>"
+    "Industry-sponsor share: %{customdata[3]:.1f}%<br>"
+    "Trials: %{customdata[4]:,.0f} · Sites: %{customdata[5]:,.0f}"
+    "<extra></extra>"
+)
+
+customdata = state_df[
+    ["places_diabetes", "trials_per_100k", "coverage_residual",
+     "industry_pct", "trial_count", "site_count"]
+].values
+
+fig1 = go.Figure()
+for idx, (name, col, cbar, cscale) in enumerate(layers):
+    is_diverging = (col == "coverage_residual")
+    zmid = 0 if is_diverging else None
+    fig1.add_trace(
+        go.Choropleth(
+            locations=state_df["geo_id"],
+            z=state_df[col],
+            locationmode="USA-states",
+            colorscale=cscale,
+            zmid=zmid,
+            colorbar=dict(title=cbar, thickness=14, len=0.7),
+            customdata=customdata,
+            hovertemplate=hover_template,
+            name=name,
+            visible=(idx == 0),
+        )
+    )
+
+# Dropdown menu: one button per layer, toggling trace visibility
+buttons = []
+for idx, (name, col, cbar, cscale) in enumerate(layers):
+    visibility = [False] * len(layers)
+    visibility[idx] = True
+    buttons.append(dict(
+        label=name,
+        method="update",
+        args=[{"visible": visibility},
+              {"title.text": f"U.S. states — {name}"}],
+    ))
+
+fig1.update_layout(
+    title=dict(text=f"U.S. states — {layers[0][0]}", x=0.02),
+    geo=dict(scope="usa", bgcolor="rgba(0,0,0,0)",
+             lakecolor="rgba(0,0,0,0)", showframe=False),
+    updatemenus=[dict(
+        type="dropdown", direction="down",
+        buttons=buttons, showactive=True,
+        x=0.02, xanchor="left", y=1.12, yanchor="top",
+        bgcolor="#222", font=dict(color="white"),
+    )],
+    height=560, margin=dict(l=10, r=10, t=80, b=10),
+)
+
+fig1.show()
+```
+
+**Figure 1.** State-level choropleth of U.S. Type 2 diabetes indicators. The dropdown in the upper-left switches the displayed layer between diabetes age-adjusted prevalence, clinical-trial density (trials per 100k population), the coverage residual (observed trial density minus the mean density for each state's diabetes-burden decile), and the industry-sponsor share of each state's trial portfolio. Hovering any state surfaces all four metrics plus absolute trial and site counts.
+
+*Why it matters.* The prevalence and trial-density layers let the reader see at a glance that the diabetes belt in the South and Appalachia does **not** map cleanly onto the trial-density map. The coverage-residual layer makes the mismatch explicit: negative values (blue) flag states that receive less trial density than their burden decile would predict, while positive values (red) flag over-supplied states. Switching to the industry-share layer shows that in most over-supplied states the extra density is driven by industry sponsors rather than academic or federal research.
+
+## Figure 2 — County distance to nearest trial site (histogram)
+
+```{python}
+#| label: fig2-histogram
+# Zero-site counties only (these are the ones with a meaningful "distance to nearest")
+no_site = county_df.loc[county_df["has_trial_site"] == False].copy()
+no_site = no_site.dropna(subset=["dist_nearest_trial_km", "stateabbr"])
+
+state_order = ["All states"] + sorted(no_site["stateabbr"].unique())
+
+fig2 = go.Figure()
+# First trace: all states combined
+fig2.add_trace(go.Histogram(
+    x=no_site["dist_nearest_trial_km"],
+    xbins=dict(start=0, end=300, size=10),
+    marker=dict(color="#5dade2", line=dict(color="#1f3b4d", width=0.5)),
+    hovertemplate="Distance: %{x} km<br>Counties: %{y}<extra></extra>",
+    name="All states",
+    visible=True,
+))
+
+# One trace per state (hidden until selected)
+for st in state_order[1:]:
+    sub = no_site.loc[no_site["stateabbr"] == st, "dist_nearest_trial_km"]
+    fig2.add_trace(go.Histogram(
+        x=sub,
+        xbins=dict(start=0, end=300, size=10),
+        marker=dict(color="#f39c12", line=dict(color="#6b4201", width=0.5)),
+        hovertemplate=f"{st}<br>Distance: %{{x}} km<br>Counties: %{{y}}<extra></extra>",
+        name=st,
+        visible=False,
+    ))
+
+buttons = []
+for i, label in enumerate(state_order):
+    vis = [False] * len(state_order)
+    vis[i] = True
+    med = no_site["dist_nearest_trial_km"].median() if i == 0 else (
+        no_site.loc[no_site["stateabbr"] == label, "dist_nearest_trial_km"].median()
+    )
+    subtitle = (f"All zero-site counties — median "
+                f"{med:.1f} km") if i == 0 else (
+                f"{label} zero-site counties — median {med:.1f} km")
+    buttons.append(dict(
+        label=label,
+        method="update",
+        args=[{"visible": vis}, {"title.text": f"Distance to nearest trial site — {subtitle}"}],
+    ))
+
+fig2.update_layout(
+    title=dict(
+        text=f"Distance to nearest trial site — All zero-site counties — median "
+             f"{no_site['dist_nearest_trial_km'].median():.1f} km",
+        x=0.02,
+    ),
+    xaxis_title="Distance to nearest trial site (km)",
+    yaxis_title="Number of counties",
+    bargap=0.05,
+    updatemenus=[dict(
+        type="dropdown", direction="down",
+        buttons=buttons, showactive=True,
+        x=0.02, xanchor="left", y=1.14, yanchor="top",
+        bgcolor="#222", font=dict(color="white"),
+    )],
+    height=520, margin=dict(l=50, r=20, t=90, b=60),
+)
+
+fig2.show()
+```
+
+**Figure 2.** Distribution of the straight-line distance from each U.S. county without a local diabetes clinical trial site to the nearest site in another county, binned at 10 km. The dropdown filters to individual states so the reader can see how the access gap shifts across the country; the "All states" view is the default. The title reports the median distance under the current selection.
+
+*Why it matters.* Nationally, 73.4% of U.S. counties host no diabetes trial site. For those counties the nationwide median nearest-site distance is roughly 58 km, and a quarter of them are more than 100 km away. Selecting a largely rural state (e.g., Montana, Wyoming, Alaska) shifts the distribution dramatically to the right, while dense, urbanized states collapse it toward the origin. The shape of the distribution — not just the median — is the practical constraint a patient faces when asked to enroll in a clinical trial.
+
+## Figure 3 — County diabetes burden vs. trial distance (scatter)
+
+```{python}
+#| label: fig3-scatter
+scat = county_df.dropna(
+    subset=["places_diabetes", "dist_nearest_trial_km",
+            "pct_poverty", "pop_total"]
+).copy()
+
+scat["log_distance"] = np.log1p(scat["dist_nearest_trial_km"])
+scat["log_pop"]      = np.log10(scat["pop_total"].clip(lower=1))
+# Marker size: map log10 population to a visually reasonable range (4–18 px)
+pmin, pmax = scat["log_pop"].min(), scat["log_pop"].max()
+scat["marker_size"]  = 4 + (scat["log_pop"] - pmin) / (pmax - pmin) * 14
+
+groups = [
+    ("All counties", None, "#5dade2"),
+    ("Medicaid expanded", "Medicaid expanded", "#2ecc71"),
+    ("Non-expansion",     "Non-expansion",     "#e74c3c"),
+]
+
+hover_template = (
+    "<b>State: %{customdata[0]}</b><br>"
+    "FIPS: %{customdata[1]}<br>"
+    "Diabetes prevalence: %{y:.1f}%<br>"
+    "Nearest trial (km): %{customdata[2]:,.1f}<br>"
+    "Poverty rate: %{customdata[3]:.1f}%<br>"
+    "Endocrinologists per 100k: %{customdata[4]:.2f}<br>"
+    "Population: %{customdata[5]:,.0f}<br>"
+    "Medicaid: %{customdata[6]}"
+    "<extra></extra>"
+)
+
+def trace_for(subset, name, color):
+    cdata = subset[[
+        "stateabbr", "geo_id", "dist_nearest_trial_km",
+        "pct_poverty", "endo_per_100k", "pop_total", "medicaid_label"
+    ]].values
+    return go.Scatter(
+        x=subset["log_distance"],
+        y=subset["places_diabetes"],
+        mode="markers",
+        marker=dict(
+            size=subset["marker_size"],
+            color=subset["pct_poverty"],
+            colorscale="Viridis",
+            cmin=scat["pct_poverty"].quantile(0.02),
+            cmax=scat["pct_poverty"].quantile(0.98),
+            colorbar=dict(title="Poverty rate (%)", thickness=14, len=0.7),
+            line=dict(color="rgba(255,255,255,0.15)", width=0.5),
+            opacity=0.75,
+        ),
+        name=name,
+        customdata=cdata,
+        hovertemplate=hover_template,
+        visible=(name == "All counties"),
+    )
+
+fig3 = go.Figure()
+for label, key, color in groups:
+    subset = scat if key is None else scat.loc[scat["medicaid_label"] == key]
+    fig3.add_trace(trace_for(subset, label, color))
+
+buttons = []
+for i, (label, _key, _color) in enumerate(groups):
+    vis = [False] * len(groups)
+    vis[i] = True
+    buttons.append(dict(
+        label=label, method="update",
+        args=[{"visible": vis},
+              {"title.text": f"County diabetes burden vs. trial distance — {label}"}],
+    ))
+
+fig3.update_layout(
+    title=dict(
+        text="County diabetes burden vs. trial distance — All counties",
+        x=0.02,
+    ),
+    xaxis=dict(
+        title="log(1 + distance to nearest trial site, km)",
+        zeroline=False,
+    ),
+    yaxis=dict(
+        title="County age-adjusted diabetes prevalence (%)",
+        zeroline=False,
+    ),
+    updatemenus=[dict(
+        type="dropdown", direction="down",
+        buttons=buttons, showactive=True,
+        x=0.02, xanchor="left", y=1.12, yanchor="top",
+        bgcolor="#222", font=dict(color="white"),
+    )],
+    height=600, margin=dict(l=60, r=20, t=90, b=60),
+)
+
+fig3.show()
+```
+
+**Figure 3.** Each point is a U.S. county. The horizontal axis is the log-scaled distance to the nearest diabetes trial site (`log(1 + km)`); the vertical axis is the county's age-adjusted diabetes prevalence. Marker color encodes poverty rate on the viridis scale and marker size encodes log-population. The dropdown filters counties by state Medicaid-expansion status.
+
+*Why it matters.* A naïve bivariate reading might expect higher diabetes prevalence in counties that are farther from the nearest trial — consistent with "access tracks need." The scatter instead shows that the prevalence–distance relationship is modest, and that the clearest gradient is with the color channel: counties with higher poverty rates sit near the top of the plot regardless of their distance to the nearest trial. Toggling between Medicaid-expanded and non-expansion states highlights the structural difference in the non-expansion South — higher baseline prevalence and higher poverty concentration — that dominates any trial-access signal. This is the descriptive motivation for Aim 2 in the written report, where trial-access features are tested for incremental predictive lift above an SES-only baseline.
+
+---
+
+*Data sources: `state_modeling_final.csv` and `county_modeling_final.csv` (pipeline outputs); Medicaid expansion status from the pipeline's hardcoded lookup (as of January 2024). See the [Report](writing-report.qmd) for the full methodology and the [GitHub repository](https://github.com/shifosss/JSC370-Midterm-Proj) for the source code that produces these inputs.*

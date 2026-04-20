@@ -137,6 +137,27 @@
     "href": "viz.html",
     "title": "Interactive Visualizations",
     "section": "",
-    "text": "Figures 1, 2, and 3 on this page are interactive. Hover, toggle layers, and apply filters to explore.\n\nContent populated in Phase 1 (HW5 figures). Scaffolded page is live so the site skeleton renders cleanly."
+    "text": "Figures 1, 2, and 3 on this page are interactive. Hover any element for details, use the dropdowns to switch the displayed variable, and explore how diabetes burden, trial access, and socioeconomic structure line up across U.S. states and counties."
+  },
+  {
+    "objectID": "viz.html#figure-1-state-burden-vs.-trial-availability-choropleth",
+    "href": "viz.html#figure-1-state-burden-vs.-trial-availability-choropleth",
+    "title": "Interactive Visualizations",
+    "section": "Figure 1 — State burden vs. trial availability (choropleth)",
+    "text": "Figure 1 — State burden vs. trial availability (choropleth)\n\n\n                            \n                                            \n\n\nFigure 1. State-level choropleth of U.S. Type 2 diabetes indicators. The dropdown in the upper-left switches the displayed layer between diabetes age-adjusted prevalence, clinical-trial density (trials per 100k population), the coverage residual (observed trial density minus the mean density for each state’s diabetes-burden decile), and the industry-sponsor share of each state’s trial portfolio. Hovering any state surfaces all four metrics plus absolute trial and site counts.\nWhy it matters. The prevalence and trial-density layers let the reader see at a glance that the diabetes belt in the South and Appalachia does not map cleanly onto the trial-density map. The coverage-residual layer makes the mismatch explicit: negative values (blue) flag states that receive less trial density than their burden decile would predict, while positive values (red) flag over-supplied states. Switching to the industry-share layer shows that in most over-supplied states the extra density is driven by industry sponsors rather than academic or federal research."
+  },
+  {
+    "objectID": "viz.html#figure-2-county-distance-to-nearest-trial-site-histogram",
+    "href": "viz.html#figure-2-county-distance-to-nearest-trial-site-histogram",
+    "title": "Interactive Visualizations",
+    "section": "Figure 2 — County distance to nearest trial site (histogram)",
+    "text": "Figure 2 — County distance to nearest trial site (histogram)\n\n\n                            \n                                            \n\n\nFigure 2. Distribution of the straight-line distance from each U.S. county without a local diabetes clinical trial site to the nearest site in another county, binned at 10 km. The dropdown filters to individual states so the reader can see how the access gap shifts across the country; the “All states” view is the default. The title reports the median distance under the current selection.\nWhy it matters. Nationally, 73.4% of U.S. counties host no diabetes trial site. For those counties the nationwide median nearest-site distance is roughly 58 km, and a quarter of them are more than 100 km away. Selecting a largely rural state (e.g., Montana, Wyoming, Alaska) shifts the distribution dramatically to the right, while dense, urbanized states collapse it toward the origin. The shape of the distribution — not just the median — is the practical constraint a patient faces when asked to enroll in a clinical trial."
+  },
+  {
+    "objectID": "viz.html#figure-3-county-diabetes-burden-vs.-trial-distance-scatter",
+    "href": "viz.html#figure-3-county-diabetes-burden-vs.-trial-distance-scatter",
+    "title": "Interactive Visualizations",
+    "section": "Figure 3 — County diabetes burden vs. trial distance (scatter)",
+    "text": "Figure 3 — County diabetes burden vs. trial distance (scatter)\n\n\n                            \n                                            \n\n\nFigure 3. Each point is a U.S. county. The horizontal axis is the log-scaled distance to the nearest diabetes trial site (log(1 + km)); the vertical axis is the county’s age-adjusted diabetes prevalence. Marker color encodes poverty rate on the viridis scale and marker size encodes log-population. The dropdown filters counties by state Medicaid-expansion status.\nWhy it matters. A naïve bivariate reading might expect higher diabetes prevalence in counties that are farther from the nearest trial — consistent with “access tracks need.” The scatter instead shows that the prevalence–distance relationship is modest, and that the clearest gradient is with the color channel: counties with higher poverty rates sit near the top of the plot regardless of their distance to the nearest trial. Toggling between Medicaid-expanded and non-expansion states highlights the structural difference in the non-expansion South — higher baseline prevalence and higher poverty concentration — that dominates any trial-access signal. This is the descriptive motivation for Aim 2 in the written report, where trial-access features are tested for incremental predictive lift above an SES-only baseline.\n\nData sources: state_modeling_final.csv and county_modeling_final.csv (pipeline outputs); Medicaid expansion status from the pipeline’s hardcoded lookup (as of January 2024). See the Report for the full methodology and the GitHub repository for the source code that produces these inputs."
   }
 ]
