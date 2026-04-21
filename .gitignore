@@ -231,9 +231,21 @@ __marimo__/
 .RData
 .Rproj.user/
 
-# Agent
+# Agent / AI assistant files
 .claude/
 .codex/
+.cursor/
+.cursorrules
+.aider*
+.continue/
+.windsurf/
+.gemini/
+CLAUDE.md
+AGENTS.md
+GEMINI.md
+COPILOT.md
+.github/copilot-instructions.md
+tasks/
 
 **/data/raw/**
 option-d-conflicts-of-interest/*
@@ -256,11 +268,7 @@ option-c-trial-access/product/*.txt
 # Markdown
 **/*.md
 !README.md
-!CLAUDE.md
-!AGENTS.md
 !spec-*.md
-!tasks/todo.md
-!tasks/lessons.md
 
 .venv-option-c/
 /.quarto/
