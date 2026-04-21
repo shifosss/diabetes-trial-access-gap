@@ -4,7 +4,7 @@ title: "About"
 
 ## Author
 
-**Chen Zhang (AlexZ)** — undergraduate, Data Science specialist, University of Toronto. Built as the JSC370 (Data Science II) final project in the Winter 2026 term, supervised by the JSC370 course team.
+I'm **Chen Zhang (AlexZ)**, an undergraduate Data Science specialist at the University of Toronto. I built this project as my JSC370 (Data Science II) final in the Winter 2026 term, with feedback and supervision from the JSC370 course team.
 
 ## Project Context
 

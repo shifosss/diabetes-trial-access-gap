@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Chen Zhang">
-<meta name="dcterms.date" content="2026-04-19">
+<meta name="dcterms.date" content="2026-04-21">
 
 <title>The Geography of Disparity in Diabetes Clinical Trial Access – JSC370: Clinical Trial Access Gap for Type 2 Diabetes</title>
 <style>
@@ -182,7 +182,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">April 19, 2026</p>
+      <p class="date">April 21, 2026</p>
     </div>
   </div>
   
@@ -201,7 +201,7 @@ ul.task-list li input[type="checkbox"] {
 <h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
 <section id="background-and-motivation" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="background-and-motivation"><span class="header-section-number">1.1</span> Background and Motivation</h2>
-<p>Diabetes mellitus represents a major public health crisis in the United States, exhibiting profound geographic and socioeconomic disparities (Barker et al., 2011). Socioeconomic status — including poverty, education, and health insurance — plays a critical role in disease prevalence and management (Hill-Briggs et al., 2021). As the medical industry continues to develop new Type 2 diabetes therapies, a paradox remains: the opportunities to participate in clinical trials are not distributed equitably across the national geography. Trial locations are frequently driven by institutional infrastructure and sponsor logistics, creating a spatial mismatch that systematically excludes vulnerable, rural, and high-burden populations from research (Tanner et al., 2015; Unger et al., 2019). This gap manifests as both physical travel barriers and a lack of local trial availability, directly limiting the generalizability of clinical research (Kirkwood et al., 2024).</p>
+<p>Type 2 diabetes is one of the largest chronic disease burdens in the United States, and the burden isn’t distributed evenly. Prevalence is highest across the South and Appalachia, and much of the county-to-county variation tracks with socioeconomic conditions such as poverty rate and insurance coverage (Barker et al., 2011; Hill-Briggs et al., 2021). Clinical trials are how new diabetes therapies get developed and eventually approved, but where a trial actually runs is usually decided by the sponsor and by whichever institutions already have the infrastructure to host one. The result is that rural and high-burden counties often have no local site, which makes enrollment harder for the residents most affected and weakens the generalizability of the evidence the trials produce (Tanner et al., 2015; Unger et al., 2019; Kirkwood et al., 2024).</p>
 </section>
 <section id="research-questions-and-hypotheses" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="research-questions-and-hypotheses"><span class="header-section-number">1.2</span> Research Questions and Hypotheses</h2>
@@ -210,7 +210,7 @@ ul.task-list li input[type="checkbox"] {
 <li><p><strong>Descriptive aim.</strong> To what extent is the geographic distribution of U.S. Type 2 diabetes clinical trial sites aligned with the spatial pattern of disease burden? Where are the largest gaps between trial availability and local need?</p></li>
 <li><p><strong>Modeling aim.</strong> Does including clinical trial access measures (local trial density and distance to the nearest trial site) improve prediction of county-level diabetes prevalence beyond a model that uses only socioeconomic and demographic characteristics, and which features carry the most predictive signal?</p></li>
 </ol>
-<p>We hypothesize that (1) trial sites are spatially concentrated in socioeconomically advantaged counties with established research infrastructure rather than in the highest-burden areas, and (2) adding trial-access variables to an SES-only prediction model will yield little improvement in cross-validated accuracy, consistent with trial access being a redundant predictor once socioeconomic structure is already in the feature set.</p>
+<p>Two working hypotheses drive the analysis. First, trial sites should cluster in counties that already have research infrastructure (large health systems, academic medical centers) and relatively advantaged socioeconomic profiles, rather than in the highest-burden counties. Second, once socioeconomic and demographic structure is already in a prediction model for diabetes burden, adding trial-access features shouldn’t do much. If trial access is itself a byproduct of the same structural factors, it should carry little independent predictive information.</p>
 </section>
 </section>
 <section id="methods" class="level1" data-number="2">
@@ -235,9 +235,9 @@ ul.task-list li input[type="checkbox"] {
 <p>EDA and feature engineering used pandas and numpy; static visualizations were produced with seaborn and matplotlib, and the interactive figures on the companion <a href="./viz.html">Visualizations page</a> with Plotly. The response variable for Aim 2 is <strong>county-level age-adjusted diabetes prevalence</strong> (<code>places_diabetes</code> from CDC PLACES). The 13 predictors fall into two groups: <em>trial-access variables</em> (log trial density, log distance to the nearest site) and <em>socioeconomic/demographic covariates</em> (poverty rate, median household income, Gini index, uninsured rate, unemployment rate, bachelor’s-degree attainment, vehicle access, internet access, % non-Hispanic Black, % Hispanic, and log population).</p>
 <p><strong>Baseline vs.&nbsp;augmented prediction comparison.</strong> To isolate the predictive contribution of trial-access features, each model was fit in two configurations: an <em>SES-only baseline</em> using the 11 socioeconomic/demographic predictors, and a <em>Full</em> model adding the two trial-access predictors. Comparing cross-validated R², RMSE, and MAE between configurations quantifies the incremental lift from trial-access features. Three model families were used:</p>
 <ul>
-<li><strong>Elastic Net</strong> (scikit-learn <code>ElasticNetCV</code>; 5-fold CV over five <code>l1_ratio</code> values and 100 <code>alpha</code> values; predictors standardized) — a regularized linear model whose coefficient magnitudes indicate feature importance under linearity.</li>
-<li><strong>Random Forest</strong> (<code>RandomForestRegressor</code> tuned via 30-iteration randomized search over trees, depth, leaves, and feature fractions) — a non-linear ensemble; permutation importance ranks features by contribution to out-of-sample accuracy.</li>
-<li><strong>XGBoost</strong> (<code>XGBRegressor</code> tuned via 30-iteration randomized search over n_estimators, learning rate, depth, subsample, and column subsample) — gradient-boosted trees that typically achieve the highest predictive accuracy.</li>
+<li><strong>Elastic Net</strong> (scikit-learn <code>ElasticNetCV</code>; 5-fold CV over five <code>l1_ratio</code> values and 100 <code>alpha</code> values; predictors standardized): a regularized linear model whose coefficient magnitudes indicate feature importance under linearity.</li>
+<li><strong>Random Forest</strong> (<code>RandomForestRegressor</code> tuned via 30-iteration randomized search over trees, depth, leaves, and feature fractions): a non-linear ensemble. Permutation importance ranks features by their contribution to out-of-sample accuracy.</li>
+<li><strong>XGBoost</strong> (<code>XGBRegressor</code> tuned via 30-iteration randomized search over n_estimators, learning rate, depth, subsample, and column subsample): gradient-boosted trees that typically achieve the highest predictive accuracy.</li>
 </ul>
 <p>All three models were evaluated under the same 5-fold cross-validation scheme (shuffled, <code>random_state=42</code>). <strong>Feature importance</strong> was assessed with SHAP values from the best-performing model (XGBoost), permutation importance from the tuned Random Forest, and standardized coefficients from Elastic Net.</p>
 </section>
@@ -287,7 +287,7 @@ Figure&nbsp;2: Coverage residual outliers by state. Each bar is a state’s cove
 </figcaption>
 </figure>
 </div>
-<p><strong>Figure 2.</strong> Coverage residual by state. The residual analysis sharpens the map comparison. Several high-burden states are under-covered relative to peers in the same burden decile, while some Mountain Plains and small-jurisdiction states are over-covered. Sponsor composition is concentrated: nationally, industry-sponsored trial density is 5.39 trials per 100k population versus 0.78 for non-industry trials — industry density is about 6.9× higher. This pattern is consistent with site placement being influenced by sponsor logistics and institutional presence.</p>
+<p><strong>Figure 2.</strong> Coverage residual by state. The residual analysis sharpens the map comparison. Several high-burden states are under-covered relative to peers in the same burden decile, while some Mountain Plains and small-jurisdiction states sit well above the density their burden decile would predict. Sponsor composition skews heavily toward industry: nationally, industry-sponsored trial density is 5.39 trials per 100k population versus 0.78 for non-industry trials, roughly 6.9× higher. That skew lines up with the picture of site placement being driven by sponsor logistics and institutional presence rather than local burden.</p>
 <p><strong>Table 1. Five most under-covered states relative to diabetes burden.</strong></p>
 <table class="caption-top table">
 <colgroup>
@@ -414,7 +414,7 @@ Figure&nbsp;2: Coverage residual outliers by state. Each bar is a state’s cove
 </tr>
 </tbody>
 </table>
-<p>Together, Figures 1–2 and Tables 1–2 show that trial availability is not uniformly low or high across states; rather, there is substantial variation in how well trial density aligns with burden.</p>
+<p>The picture from Figures 1–2 and Tables 1–2 is the same: state trial density isn’t uniformly high or low; what varies most is how closely it tracks the underlying burden.</p>
 </section>
 <section id="county-level-access-gaps-are-large" class="level3" data-number="3.1.2">
 <h3 data-number="3.1.2" class="anchored" data-anchor-id="county-level-access-gaps-are-large"><span class="header-section-number">3.1.2</span> County-Level Access Gaps Are Large</h3>
@@ -469,7 +469,7 @@ Figure&nbsp;3: Distance to the nearest diabetes trial site for counties without 
 </figure>
 </div>
 <p><strong>Figure 3.</strong> County-level distance distribution. For no-site counties, travel distance is often substantial. A state can look moderately well covered in aggregate while still leaving most of its counties without feasible local trial access. An interactive version with a per-state filter is available on the <a href="./viz.html">Visualizations page</a>.</p>
-<p>Among counties with at least one trial site, endocrinologist density and trial density co-occur — both likely reflect academic medical centers and large health systems. The bivariate scatter (available on the <a href="./viz.html">Visualizations page</a>) is descriptive only; the Aim 2 models test whether these features contribute independent predictive signal.</p>
+<p>Among counties with at least one trial site, endocrinologist density and trial density tend to co-occur; both likely reflect the same academic medical centers and large health systems. The bivariate scatter (available on the <a href="./viz.html">Visualizations page</a>) is descriptive only; the Aim 2 models test whether these features contribute independent predictive signal.</p>
 </section>
 </section>
 <section id="modeling-trial-access-features-add-little-predictive-lift-aim-2" class="level2" data-number="3.2">
@@ -536,7 +536,7 @@ Figure&nbsp;3: Distance to the nearest diabetes trial site for counties without 
 </table>
 </div>
 </div>
-<p>Table 4 reports the CV metrics for the six model–configuration combinations. Across all three model families the Full model’s R² improvement over the SES-only baseline is modest in absolute terms; the trial-access variables do not substantially reduce cross-validated prediction error. The gradient-boosted model achieves the highest R² of the three, and the relative ranking (XGBoost ≳ Random Forest &gt; Elastic Net) is stable across configurations, consistent with the non-linear models capturing interactions among SES predictors that linear regularization cannot.</p>
+<p>Table 4 reports the CV metrics for the six model-configuration combinations. Across all three model families the Full model’s R² improvement over the SES-only baseline is small in absolute terms, and the trial-access variables don’t meaningfully reduce cross-validated prediction error. XGBoost comes out on top, and the ranking (XGBoost ≳ Random Forest &gt; Elastic Net) holds across configurations. That matches what you’d expect if the non-linear models are picking up interactions among SES predictors that linear regularization can’t reach.</p>
 <div id="fig-cv-compare" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-cv-compare-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -550,7 +550,7 @@ Figure&nbsp;4: SES-only vs.&nbsp;Full model R² for Elastic Net, Random Forest, 
 <p><strong>Figure 4.</strong> Grouped-bar comparison of cross-validated R² for each model family in the SES-only (blue) and Full (red) configurations. The annotated Δ values make the incremental lift explicit.</p>
 <section id="feature-importance" class="level3" data-number="3.2.1">
 <h3 data-number="3.2.1" class="anchored" data-anchor-id="feature-importance"><span class="header-section-number">3.2.1</span> Feature Importance</h3>
-<p>The feature-importance analyses tell a consistent story. Regardless of which lens is used — standardized Elastic Net coefficients, Random Forest permutation importance, or SHAP values from XGBoost — socioeconomic and demographic variables dominate, and the two trial-access features sit near the bottom of the ranking.</p>
+<p>The three feature-importance analyses point to the same answer. Whether the lens is standardized Elastic Net coefficients, Random Forest permutation importance, or SHAP values from XGBoost, socioeconomic and demographic variables dominate, and the two trial-access features sit near the bottom of the ranking.</p>
 <div id="fig-importance" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-importance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -601,27 +601,27 @@ Figure&nbsp;5: <strong>Figure 5.</strong> Feature importance from the linear (le
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-shap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6: <strong>Figure 6.</strong> SHAP decomposition of XGBoost predictions. The summary plot (left) places the structural SES predictors — % non-Hispanic Black, poverty, income, % Hispanic — at the top. The group-aggregated view (right) shows the trial-access block contributing an order of magnitude less than Economic or Demographic groups.
+Figure&nbsp;6: <strong>Figure 6.</strong> SHAP decomposition of XGBoost predictions. The summary plot (left) places the structural SES predictors (% non-Hispanic Black, poverty, income, % Hispanic) at the top. The group-aggregated view (right) shows the trial-access block contributing roughly an order of magnitude less than the Economic or Demographic groups.
 </figcaption>
 </figure>
 </div>
-<p>Taken together, Figures 4–6 and Table 4 support Hypothesis 2: <strong>trial-access features add little predictive signal for county-level diabetes burden once socioeconomic and demographic structure is already in the model.</strong> The Full-model ΔR² values are small enough to be consistent with CV-split noise, and every feature-importance lens places trial access below every major SES block.</p>
+<p>Hypothesis 2 is supported with Figures 4–6 and Table 4: <strong>trial-access features add little predictive signal for county-level diabetes burden once socioeconomic and demographic structure is already in the model.</strong> The Full-model ΔR² values are small enough to be interpreted as CV-split noise, and every feature-importance lens places trial access below every major SES block.</p>
 </section>
 </section>
 </section>
 <section id="conclusions-and-summary" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Conclusions and Summary</h1>
-<p><strong>Hypothesis outcomes.</strong> The descriptive evidence (Aim 1) supports Hypothesis 1. State-level trial density does not align smoothly with diabetes burden; the residual analysis identifies systematic over- and under-coverage relative to peer states, and sponsor composition indicates that much of the extra density in over-covered states is driven by industry rather than academic or federal research. At the county level, 73.4% of counties host no trial site and travel distances are often substantial. The modeling evidence (Aim 2) supports Hypothesis 2. Across three model families with matched tuning protocols, adding trial-access variables to an SES-only baseline produces at most a small improvement in cross-validated R². The feature-importance analyses — from both a linear and two non-linear perspectives — rank the trial-access variables below every major socioeconomic block.</p>
-<p><strong>Bigger-picture framing.</strong> Trial placement appears to be a consequence of institutional infrastructure and sponsor logistics rather than a response to local disease burden, and that placement is so correlated with the broader structural features of a county (poverty, insurance, education, racial composition) that, once those features are modeled, trial access adds little independent predictive information. This is a coherent — if uncomfortable — story: the same socioeconomic disadvantage that produces higher diabetes burden also excludes a county from the research infrastructure that develops new diabetes treatments. Improving trial access in high-burden, under-covered regions is therefore unlikely to be achieved by marginal adjustments to site selection alone; it requires investment in the upstream infrastructure (endocrinology workforce, academic medical centers, community health networks) that draws sponsors in the first place.</p>
-<p><strong>Limitations.</strong></p>
+<p>The Aim 1 evidence supports Hypothesis 1. State-level trial density does not align well with diabetes burden. The coverage residual identifies a set of states that sit well above or below the density expected for their burden decile, and in the over-covered states most of the extra density comes from industry-sponsored trials rather than academic or federal ones. At the county level, 73.4% of counties host no trial site, and travel distances for those counties are often substantial. The Aim 2 evidence supports Hypothesis 2. Across three model families with matched tuning, adding trial-access variables on top of an SES-only baseline yields at most a small improvement in cross-validated R², and every feature-importance view (Elastic Net coefficients, Random Forest permutation importance, XGBoost SHAP) ranks the two trial-access variables below every major socioeconomic block.</p>
+<p>By taking together the combined evidences, we can claim that trial placement is largely downstream of the same structural factors that shape diabetes burden itself. Counties that attract sponsors tend to be the ones that already host academic medical centers and established research pipelines, and those same counties tend to be wealthier and better insured, with more college-educated populations on average. Once a model of diabetes prevalence already sees a county’s poverty rate, insurance coverage, racial composition, and education, whether that county happens to host a trial site (or sits close to one) adds little independent information. The less comfortable implication is that the conditions that raise a county’s diabetes burden also cut it off from the research infrastructure that develops new treatments for it, so site-selection tweaks on their own are unlikely to close the access gap. Upstream investment in research infrastructure (in endocrinology workforce and academic medical centers, for example) has to come with it.</p>
+<p>There are still some limitations about these results:</p>
 <ul>
-<li>The analyses are cross-sectional and ecological: inferences describe county-level associations, not individual-level causal relationships. A county with apparent access gaps may still have residents enrolled in trials elsewhere, and vice versa.</li>
-<li>Trial-access features are measured from a cumulative ClinicalTrials.gov snapshot, while burden and SES variables reflect 2018–2022 windows. Historical placement weighs into the cumulative count.</li>
-<li>County-level trial density is zero-inflated (73.4% of counties), so most of the access information lives in the log-distance feature. Haversine distance is also a crude proxy for real-world travel (road networks, drive time, and transit are not modeled).</li>
-<li>Medicaid expansion, rurality, and academic-center presence enter the analysis as state-level or binary county-level proxies; a finer county-level measure of research infrastructure (for example, proximity to a CTSA-hubbed academic medical center) might shift the feature-importance rankings.</li>
-<li>The model-comparison table in this report reflects one random 5-fold CV seed; variance across seeds was not reported here. The qualitative conclusion (small ΔR², SES dominates) is robust, but precise effect magnitudes should be interpreted with that caveat in mind.</li>
+<li>The analyses are cross-sectional and ecological. Associations describe counties, not individual patients; a county with apparent access gaps may still have residents enrolled in trials elsewhere, and vice versa.</li>
+<li>Trial-access features come from a cumulative ClinicalTrials.gov snapshot, while burden and SES variables reflect 2018–2022 windows. Historical placement is baked into the cumulative count.</li>
+<li>County trial density is zero-inflated because 73.4% of counties have no site, so most of the access signal lives in the log-distance feature. Haversine distance is itself a rough proxy for real-world travel; road networks, drive time, and transit are not modeled.</li>
+<li>Medicaid expansion, rurality, and academic-center presence enter the analysis at the state level or as coarse county-level binaries. A finer county-level measure of research infrastructure (for example, proximity to a CTSA-hubbed academic medical center) could shift the feature-importance rankings.</li>
+<li>The Table 4 comparison reflects a single random 5-fold CV seed, so seed-to-seed variance is not reported here. The qualitative conclusion (small ΔR², SES dominates) is robust, but precise effect magnitudes should be interpreted with that caveat in mind.</li>
 </ul>
-<p><strong>Takeaway.</strong> The study set out to ask whether clinical-trial access varies independently of socioeconomic structure, and whether it carries any additional predictive signal for county-level diabetes burden beyond that structure. The answer — descriptively and predictively — is that trial access is largely a downstream reflection of the same structural factors that shape disease burden. Equity interventions on trial placement that ignore the underlying research-infrastructure gap are therefore likely to have small effects.</p>
+<p>The study set out to test whether clinical trial access varies independently of socioeconomic structure, and whether it adds predictive signal for diabetes burden once that structure is already in the model. On both counts the answer is the same: trial access largely reflects the same structural factors that shape the disease itself. Equity interventions focused only on where trials are placed, without also addressing the underlying research-infrastructure gap, are therefore likely to have small effects.</p>
 </section>
 <section id="references" class="level1 unnumbered">
 <h1 class="unnumbered">References</h1>

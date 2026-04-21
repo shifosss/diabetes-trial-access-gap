@@ -7,15 +7,15 @@ date: today
 
 ## Project Summary
 
-Type 2 diabetes affects tens of millions of Americans and is heavily shaped by socioeconomic structure. Clinical trials are the pathway through which new therapies are developed, yet their geographic placement is driven by sponsor logistics and institutional infrastructure rather than disease burden alone. This project links the ClinicalTrials.gov registry with CDC PLACES burden estimates, ACS socioeconomic data, rurality, Medicaid expansion status, and healthcare-infrastructure proxies to ask where U.S. diabetes-trial access is thinnest relative to need, and whether trial-access measures carry any predictive signal for county-level diabetes burden once socioeconomic structure is already accounted for.
+Type 2 diabetes affects tens of millions of Americans, and where the burden is heaviest is shaped heavily by socioeconomic structure. Clinical trials are the pipeline that develops new therapies, but trial sites get placed where sponsors and hosting institutions already have infrastructure, not where patient need is greatest. This project joins the ClinicalTrials.gov registry with CDC PLACES burden estimates, ACS socioeconomic data, rurality, Medicaid expansion status, and healthcare-infrastructure proxies. It asks two questions: where is U.S. diabetes-trial access thinnest relative to burden, and do trial-access features add predictive signal for county-level diabetes burden after socioeconomic structure is already in the model?
 
 ## Headline findings
 
-- **3,646 U.S. Type 2 diabetes studies** and **47,118 site records** were flattened and geocoded to counties.
-- **73.4% of U.S. counties host no diabetes trial site.** For those counties the median distance to the nearest site is **58.4 km**, and **24%** are more than 100 km away.
-- At the state level, a **coverage residual** (observed trial density minus the density expected for the state's diabetes-burden decile) reveals systematic under- and over-coverage. Industry-sponsored trial density is **≈6.9× higher** than non-industry density nationally.
-- Across **Elastic Net, Random Forest, and XGBoost** (5-fold CV on 3,221 counties), adding trial-access features (`log_trials`, `log_dist`) to an SES-only baseline improves R² by at most **ΔR² ≈ +0.003** — trial access is effectively redundant once socioeconomic structure is in the model.
-- Every feature-importance lens (standardized coefficients, permutation importance, SHAP) ranks the two trial-access variables **below every major SES block**.
+- **3,646 U.S. Type 2 diabetes studies and 47,118 site records** were flattened from the ClinicalTrials.gov registry and geocoded to county FIPS codes.
+- **Most counties don't host a trial.** 73.4% of U.S. counties have no diabetes trial site, and among those counties the median distance to the nearest site is 58.4 km.
+- **State trial density doesn't track state diabetes burden.** A coverage residual (observed density minus the density expected for the state's burden decile) flags systematic under- and over-coverage, and industry-sponsored density runs about 6.9× non-industry density nationally.
+- **Trial-access features add little once socioeconomic structure is in the model.** In a matched comparison across Elastic Net, Random Forest, and XGBoost (5-fold CV on 3,221 counties), adding log trial count and log distance-to-nearest-site on top of the SES baseline moves cross-validated R² by at most about 0.003.
+- **Every feature-importance view agrees.** Standardized Elastic Net coefficients, Random Forest permutation importance, and XGBoost SHAP values all place trial access below every major socioeconomic block.
 
 ## Explore the project
 
