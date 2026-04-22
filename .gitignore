@@ -268,8 +268,9 @@ option-c-trial-access/product/*.txt
 # Markdown
 **/*.md
 !README.md
-!spec-*.md
 
 .venv-option-c/
 /.quarto/
 **/*.quarto_ipynb
+
+.DS_Store
