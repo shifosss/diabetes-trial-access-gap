@@ -21,7 +21,7 @@ format:
     colorlinks: true
 ---
 
-> **Interactive figures.** On the [Interactive Visualizations page](viz.qmd), Figures 1, 2, and 3 are interactive versions of this report's state choropleth (Figure 1) and county distance histogram (Figure 3), plus an interactive scatter of county prevalence versus trial distance. Full source and pipeline: <https://github.com/shifosss/JSC370-Midterm-Proj>.
+> **Interactive figures.** On the [Interactive Visualizations page](viz.qmd), Figures 1, 2, and 3 are interactive versions of this report's state choropleth (Figure 1) and county distance histogram (Figure 3), plus an interactive scatter of county prevalence versus trial distance. Full source and pipeline: <https://github.com/shifosss/diabetes-trial-access-gap>.
 
 # Introduction
 

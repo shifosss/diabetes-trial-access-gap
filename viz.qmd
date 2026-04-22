@@ -311,4 +311,4 @@ fig3.show()
 
 ---
 
-*Data sources: `state_modeling_final.csv` and `county_modeling_final.csv` (pipeline outputs); Medicaid expansion status from the pipeline's hardcoded lookup (as of January 2024). See the [Report](writing-report.qmd) for the full methodology and the [GitHub repository](https://github.com/shifosss/JSC370-Midterm-Proj) for the source code that produces these inputs.*
+*Data sources: `state_modeling_final.csv` and `county_modeling_final.csv` (pipeline outputs); Medicaid expansion status from the pipeline's hardcoded lookup (as of January 2024). See the [Report](writing-report.qmd) for the full methodology and the [GitHub repository](https://github.com/shifosss/diabetes-trial-access-gap) for the source code that produces these inputs.*

@@ -27,7 +27,7 @@ website:
         href: about.qmd
     right:
       - icon: github
-        href: https://github.com/shifosss/JSC370-Midterm-Proj
+        href: https://github.com/shifosss/diabetes-trial-access-gap
         target: _blank
   page-footer:
     center: "© 2026 Chen Zhang · JSC370 Final Project · University of Toronto"

@@ -23,5 +23,5 @@ Type 2 diabetes affects tens of millions of Americans, and where the burden is h
 - **[Download the report (PDF)](writing-report.pdf)** — downloadable, self-contained version of the full report.
 - **[Interactive visualizations](viz.html)** — three interactive figures (HW5 deliverable): state choropleth, county distance histogram, and county scatter.
 - **Watch the 5-minute presentation** *(link added in Phase 6 — recording in progress.)*
-- **[GitHub repository](https://github.com/shifosss/JSC370-Midterm-Proj)** — full source, data, and pipeline.
-- **Full computational pipeline** — the end-to-end Quarto notebook that produces the model-ready datasets and all figures lives on GitHub at [`option-c-trial-access/product/option-c.qmd`](https://github.com/shifosss/JSC370-Midterm-Proj/blob/main/option-c-trial-access/product/option-c.qmd). It is not served here to keep the site focused; graders can view or re-run it directly from the repo.
+- **[GitHub repository](https://github.com/shifosss/diabetes-trial-access-gap)** — full source, data, and pipeline.
+- **Full computational pipeline** — the end-to-end Quarto notebook that produces the model-ready datasets and all figures lives on GitHub at [`option-c-trial-access/product/option-c.qmd`](https://github.com/shifosss/diabetes-trial-access-gap/blob/main/option-c-trial-access/product/option-c.qmd). It is not served here to keep the site focused; graders can view or re-run it directly from the repo.

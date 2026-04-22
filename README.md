@@ -1,14 +1,14 @@
 # JSC370 Final Project — Clinical Trial Access Gap for Type 2 Diabetes
 
-**Live website:** <https://shifosss.github.io/JSC370-Midterm-Proj/>
+**Live website:** <https://shifosss.github.io/diabetes-trial-access-gap/>
 
-- **Landing page** (summary + findings): <https://shifosss.github.io/JSC370-Midterm-Proj/>
-- **Full report**: <https://shifosss.github.io/JSC370-Midterm-Proj/writing-report.html>
-- **Downloadable PDF of the report**: <https://shifosss.github.io/JSC370-Midterm-Proj/writing-report.pdf>
-- **Interactive visualizations (HW5 deliverable)**: <https://shifosss.github.io/JSC370-Midterm-Proj/viz.html> — **Figures 1, 2, and 3 on that page are interactive.**
-- **About / data sources**: <https://shifosss.github.io/JSC370-Midterm-Proj/about.html>
+- **Landing page** (summary + findings): <https://shifosss.github.io/diabetes-trial-access-gap/>
+- **Full report**: <https://shifosss.github.io/diabetes-trial-access-gap/writing-report.html>
+- **Downloadable PDF of the report**: <https://shifosss.github.io/diabetes-trial-access-gap/writing-report.pdf>
+- **Interactive visualizations (HW5 deliverable)**: <https://shifosss.github.io/diabetes-trial-access-gap/viz.html> — **Figures 1, 2, and 3 on that page are interactive.**
+- **About / data sources**: <https://shifosss.github.io/diabetes-trial-access-gap/about.html>
 
-_The project began as the JSC370 midterm and is extended into the final deliverable. The repository name (`JSC370-Midterm-Proj`) is preserved to keep URLs stable; the content below is the final-project version._
+_The project began as the JSC370 midterm and is extended into the final deliverable. The repository name (`diabetes-trial-access-gap`) is preserved to keep URLs stable; the content below is the final-project version._
 
 ## What this project studies
 
@@ -17,7 +17,7 @@ U.S. Type 2 diabetes clinical-trial access, at the state and county level. We li
 1. **Descriptive aim** — how aligned is the geographic distribution of U.S. Type 2 diabetes trial sites with disease burden? Where are the largest access gaps?
 2. **Modeling aim** — once county-level socioeconomic and demographic structure is in the feature set, do trial-access features (local trial density, distance to the nearest site) add independent predictive signal for county-level diabetes prevalence?
 
-See the [full report](https://shifosss.github.io/JSC370-Midterm-Proj/writing-report.html) for the methods, results, and conclusions.
+See the [full report](https://shifosss.github.io/diabetes-trial-access-gap/writing-report.html) for the methods, results, and conclusions.
 
 ## Repository layout
 
@@ -106,7 +106,7 @@ quarto render                                   # HTML for index, report, viz, a
 quarto render writing-report.qmd --to pdf       # Downloadable PDF of the report
 ```
 
-The rendered site lands in `docs/`. GitHub Pages serves `docs/` from the `main` branch at <https://shifosss.github.io/JSC370-Midterm-Proj/>.
+The rendered site lands in `docs/`. GitHub Pages serves `docs/` from the `main` branch at <https://shifosss.github.io/diabetes-trial-access-gap/>.
 
 ## Key pipeline outputs (tracked in git)
 
