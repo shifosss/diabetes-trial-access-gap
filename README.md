@@ -6,6 +6,7 @@
 - **Full report**: <https://shifosss.github.io/diabetes-trial-access-gap/writing-report.html>
 - **Downloadable PDF of the report**: <https://shifosss.github.io/diabetes-trial-access-gap/writing-report.pdf>
 - **Interactive visualizations (HW5 deliverable)**: <https://shifosss.github.io/diabetes-trial-access-gap/viz.html> — **Figures 1, 2, and 3 on that page are interactive.**
+- **5-minute presentation**: <https://youtu.be/wbvBLSPmb5k>
 - **About / data sources**: <https://shifosss.github.io/diabetes-trial-access-gap/about.html>
 
 _The project began as the JSC370 midterm and is extended into the final deliverable. The repository name (`diabetes-trial-access-gap`) is preserved to keep URLs stable; the content below is the final-project version._

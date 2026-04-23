@@ -123,7 +123,7 @@
     "href": "index.html#explore-the-project",
     "title": "Clinical Trial Access Gap for Type 2 Diabetes",
     "section": "Explore the project",
-    "text": "Explore the project\n\nRead the full report — Introduction, methods, results, conclusions.\nDownload the report (PDF) — downloadable, self-contained version of the full report.\nInteractive visualizations — three interactive figures (HW5 deliverable): state choropleth, county distance histogram, and county scatter.\nWatch the 5-minute presentation (link added in Phase 6 — recording in progress.)\nGitHub repository — full source, data, and pipeline.\nFull computational pipeline — the end-to-end Quarto notebook that produces the model-ready datasets and all figures lives on GitHub at option-c-trial-access/product/option-c.qmd. It is not served here to keep the site focused; graders can view or re-run it directly from the repo."
+    "text": "Explore the project\n\nRead the full report — Introduction, methods, results, conclusions.\nDownload the report (PDF) — downloadable, self-contained version of the full report.\nInteractive visualizations — three interactive figures (HW5 deliverable): state choropleth, county distance histogram, and county scatter.\nWatch the 5-minute presentation — video walkthrough of the website and main findings.\nGitHub repository — full source, data, and pipeline.\nFull computational pipeline — the end-to-end Quarto notebook that produces the model-ready datasets and all figures lives on GitHub at option-c-trial-access/product/option-c.qmd. It is not served here to keep the site focused; graders can view or re-run it directly from the repo."
   },
   {
     "objectID": "viz.html",
